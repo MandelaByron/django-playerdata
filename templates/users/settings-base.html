@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block main_messages  %}{% endblock main_messages %}
+
+{% block content %}
+    <div class="grid grid-cols-12 gap-5 gap-y-3">
+        <!-- Account Settings Header -->
+        <div class="col-span-12 sm:col-span-3">
+            <h2 class="mt-1 text-2xl font-semibold">Account settings</h2>
+        </div>
+
+        {% block messages %}
+            <div class="col-span-12 sm:col-span-9">
+                {% if messages %}
+                    {% for message in messages %}
+                    <div role="alert" class="alert alert-{{ message.tags }} alert-soft transition-opacity duration-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>{{ message }}</span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="flex flex-col space-y-2"></div>
+                {% endif %}
+            </div>
+        {% endblock %}
+
+        <div class="col-span-12 gap-5 gap-y-3">
+            <div class="grid grid-cols-12 gap-5 gap-y-5 sm:col-span-12" id="settings-wrapper">
+                {% block sidebar %}         
+                    {% include "users/sidebar.html" %}
+                {% endblock sidebar %}
+                <div class="col-span-12 sm:col-span-9" id="settings-content">
+                    {% block settings_content %}
+                    
+                    {% endblock %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+  
+{% endblock content %}
+
+
+<!-- settings-base.html -->

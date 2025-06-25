@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load widget_tweaks %}
+{% load i18n %}
+
+{% block content %}
+   <div class="grid grid-cols-1 lg:grid-cols-5 gap-x-1 gap-8">
+        <!-- profile -->
+        <div class="flex flex-col p-6 items-start gap-2.5 bg-[#313131] rounded-2xl col-span-1 lg:col-span-2 lg:w-[92%] h-fit">
+            <div class="flex max-md:flex-col max-md:items-start lg:flex-col lg:items-start gap-4 items-center self-stretch">
+                <div class="avatar">
+                    <div class="w-[98px] h-[98px] rounded-full">
+                        <img src="{{ user.avatar.url }}" alt="">
+                    </div>
+                </div>
+                <!-- name and email -->
+                <div class="flex flex-col items-start gap-1 flex-[1_0_0]">
+                    <span class="lg:text-2xl text-lg font-semibold max-md:font-bold">{{ user.fullname }}</span>
+                    <span class="text-base font-normal text-[#FAFAFA]">{{ user.email }}</span>
+                </div>
+
+                <!-- edit buttons -->
+                <div class="flex items-start self-stretch lg:justify-end gap-2 max-md:self-stretch">
+                    <a href="{% url 'profile-settings' %}"
+                    class="flex max-md:flex-[1_0_0] text-sm font-semibold lg:flex-[1_0_0] justify-center border [border-color:rgba(255,255,255,0.2)] gap-2 py-2 px-3 bg-zinc-700 hover:bg-zinc-600 rounded-[9999px] max-md:whitespace-nowrap whitespace-nowrap">
+                     Edit Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col items-start gap-8 col-span-1 lg:col-span-3">
+            <!-- Plan container -->
+            <div class="flex flex-col items-start gap-4 self-stretch">
+                <span class="text-[20px] font-medium self-stretch">Your Plan</span>
+                
+                <div class="flex flex-col items-start gap-1 self-stretch rounded-lg bg-[#313131] p-6">
+                    <span class="text-xl font-semibold">Free Plan</span>
+                    <span class="text-xs font-normal opacity-[0.7]">Registered 23 May 2024</span>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col items-start md:gap-6 gap-4 self-stretch bg-[#313131] md:p-6 p-4 ">
+                <!-- Upgrade Plan -->
+                <div class="flex max-md:flex-col max-md:gap-3 md:justify-between self-stretch">
+                    <span class="text-lg font-semibold self-stretch">Upgrade to a paid plan for additional benefits</span>
+                    <button class="flex items-center justify-center rounded-[9999px] bg-[#811FD4] py-2 px-4 font-semibold text-sm max-md:w-fit whitespace-nowrap">
+                        Upgrade Plan
+                    </button>
+                </div>
+                <!-- Plan features -->
+                <div class="flex max-md:flex-col gap-4 items-center max-md:justify-center self-stretch">
+                    <!-- plan1 -->
+                    <div class="flex md:flex-col items-center self-stretch md:flex-[1_0_0] gap-4 p-4 rounded-sm border border-zinc-600 hover:border-cyan-400 hover:bg-zinc-700 hover:shadow-md hover:scale-[1.02] transition-all duration-300 ease-in-out cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="49" height="48" viewBox="0 0 49 48" fill="none">
+                            <path d="M39.7966 6.63222L33.7389 4.10819C33.5676 4.03675 33.3837 4 33.198 4H30.3855C29.6089 4 28.9792 4.62962 28.9792 5.40625V6.34375C28.9792 8.67372 27.0905 10.5625 24.7605 10.5625C22.4305 10.5625 20.5417 8.67372 20.5417 6.34375V5.40625C20.5417 4.62962 19.9121 4 19.1355 4H16.323C16.1374 4 15.9535 4.03675 15.7822 4.10819L9.7244 6.63222C6.04453 8.1655 3.66675 11.7322 3.66675 15.7188V21.3438C3.66675 22.1204 4.29637 22.75 5.073 22.75H11.1667V43.0938C11.1667 43.8704 11.7964 44.5 12.573 44.5H36.948C37.7246 44.5 38.3542 43.8704 38.3542 43.0938V22.75H44.448C45.2246 22.75 45.8542 22.1204 45.8542 21.3438V15.7188C45.8542 11.7322 43.4765 8.1655 39.7966 6.63222Z" fill="#811FD4"/>
+                            <path d="M41.1667 22.75H38.3542V17.5938C38.3542 16.8171 38.9839 16.1875 39.7605 16.1875C40.5371 16.1875 41.1667 16.8171 41.1667 17.5938V22.75ZM11.1667 17.5938C11.1667 16.8171 10.5371 16.1875 9.7605 16.1875C8.98387 16.1875 8.35425 16.8171 8.35425 17.5938V22.75H11.1667V17.5938ZM22.4167 21.3438C22.4167 20.5671 21.7871 19.9375 21.0105 19.9375H17.2605C16.4839 19.9375 15.8542 20.5671 15.8542 21.3438C15.8542 22.1204 16.4839 22.75 17.2605 22.75H21.0105C21.7871 22.75 22.4167 22.1204 22.4167 21.3438Z" fill="url(#paint0_radial_240_8639)"/>
+                            <path d="M39.206 28.7356C36.3743 28.7356 34.0706 31.0481 31.8839 33.55C29.6971 31.0481 27.3935 28.7356 24.5618 28.7356C20.9993 28.7356 18.1011 31.6339 18.1011 35.1963C18.1011 38.7587 20.9993 41.657 24.5618 41.657C27.3935 41.657 29.6971 39.3445 31.8839 36.8426C34.0706 39.3445 36.3743 41.657 39.206 41.657C42.7684 41.657 45.6667 38.7587 45.6667 35.1963C45.6667 31.6339 42.7684 28.7356 39.206 28.7356ZM24.5618 39.5034C22.1868 39.5034 20.2546 37.5712 20.2546 35.1963C20.2546 32.8213 22.1868 30.8892 24.5618 30.8892C26.5507 30.8892 28.5332 32.9747 30.4618 35.1963C28.5332 37.4179 26.5507 39.5034 24.5618 39.5034ZM39.206 39.5034C37.2171 39.5034 35.2345 37.4179 33.306 35.1963C35.2345 32.9747 37.2171 30.8892 39.206 30.8892C41.5809 30.8892 43.5131 32.8213 43.5131 35.1963C43.5131 37.5712 41.5809 39.5034 39.206 39.5034Z" fill="white"/>
+                            <defs>
+                              <radialGradient id="paint0_radial_240_8639" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(13.9448 19.4687) rotate(1.76447) scale(27.2348 9.59693)">
+                                <stop stop-color="#23252C"/>
+                                <stop offset="1" stop-color="#313131"/>
+                              </radialGradient>
+                            </defs>
+                        </svg>
+                        <span class="font-semibold text-base md:whitespace-nowrap">View unlimited players</span>
+                    </div>
+                    <!-- plan2 -->
+                    <div class="flex md:flex-col items-center self-stretch md:flex-[1_0_0] gap-4 p-4 rounded-sm border border-zinc-600 hover:border-cyan-400 hover:bg-zinc-700 hover:shadow-md hover:scale-[1.02] transition-all duration-300 ease-in-out cursor-pointer ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <g clip-path="url(#clip0_240_8648)">
+                              <path d="M9.46866 6.01855L10.0559 8.60249L7.47187 8.01533C6.9375 8.29668 6.31866 8.4373 5.67188 8.4373C3.33741 8.4373 1.45312 6.55283 1.45312 4.21855C1.45312 1.88408 3.33741 -0.000198364 5.67188 -0.000198364C8.00634 -0.000198364 9.89062 1.88408 9.89062 4.21855C9.89062 4.86533 9.75 5.48418 9.46866 6.01855Z" fill="white"/>
+                              <path d="M39.9376 3.89052C39.4032 3.32802 38.5032 3.32802 37.9688 3.89052L34.003 7.85624C33.4406 8.39062 33.4406 9.29043 34.003 9.8249C34.5374 10.3874 35.4374 10.3874 35.9718 9.8249L38.9249 6.89999C42.047 10.4719 43.7344 15 43.7344 19.7812C43.7344 30.6375 34.9031 39.4687 24.0469 39.4687C19.2656 39.4687 14.7375 37.7811 11.1655 34.6593L14.0906 31.7062C14.653 31.1718 14.653 30.2718 14.0906 29.7374C13.5563 29.1749 12.6563 29.1749 12.1219 29.7374L8.15616 33.7031C7.59375 34.2375 7.59375 35.1373 8.15616 35.6718C12.4031 39.9468 18.0562 42.2812 24.0469 42.2812L25.3844 43.7436L26.8594 42.1125C37.9406 40.7062 46.5469 31.2281 46.5469 19.7812C46.5469 13.7906 44.2124 8.13749 39.9376 3.89052ZM32.4844 8.53124L22.5562 2.99052C13.9499 3.72177 7.17188 10.9781 7.17188 19.7812C7.17188 20.3718 7.2 20.9624 7.25634 21.525L32.4844 21.1875V8.53124ZM17.0156 32.4375L21.5438 36.4594C22.3595 36.6 23.2032 36.6562 24.0469 36.6562C31.95 36.6562 38.5874 31.2 40.4156 23.8594C40.1343 23.9436 31.0781 22.5937 31.0781 22.5937L17.0156 32.4375ZM36.7031 45.1875H26.8594L25.4531 43.7812L24.0469 45.1875H14.2031C13.4155 45.1875 12.7969 45.8061 12.7969 46.5937C12.7969 47.3811 13.4155 48 14.2031 48H36.7031C37.4907 48 38.1094 47.3811 38.1094 46.5937C38.1094 45.8061 37.4907 45.1875 36.7031 45.1875Z" fill="#7838AE"/>
+                              <path d="M24.0469 2.90625C23.5406 2.90625 23.0344 2.93438 22.5562 2.99053C20.8969 4.25616 19.8281 6.28125 19.8281 8.53125C19.8281 10.8655 21.7124 12.75 24.0469 12.75H28.2656C29.8125 12.75 31.0781 14.0156 31.0781 15.5625C31.0781 17.1094 29.8125 18.375 28.2656 18.375H19.8281C19.8281 19.9219 18.5625 21.1875 17.0156 21.1875H8.57813C8.1001 21.1875 7.64991 21.2999 7.25635 21.525C8.04375 29.203 13.978 35.3343 21.5438 36.4594C20.475 35.4469 19.8281 34.0125 19.8281 32.4375C19.8281 30.8906 21.0938 29.625 22.6406 29.625H28.2656V26.8125C28.2656 25.2656 29.5313 24 31.0781 24H39.5156C39.825 24 40.1343 23.9437 40.4156 23.8594C40.7531 22.5655 40.9219 21.1875 40.9219 19.7812C40.9219 10.4719 33.3563 2.90625 24.0469 2.90625ZM16.5937 15.1405C17.1562 14.6062 17.1562 13.7062 16.5937 13.1718L9.46866 6.01884C9.0751 6.89062 8.34375 7.62178 7.47188 8.01553L14.625 15.1405C15.1312 15.7033 16.0879 15.703 16.5937 15.1405ZM24.0469 45.1875H26.8594V42.1125C25.9312 42.2249 25.0032 42.2812 24.0469 42.2812V45.1875Z" fill="#7838AE"/>
+                              <path d="M24.0469 2.90625C23.5406 2.90625 23.0344 2.93438 22.5562 2.99053C20.8969 4.25616 19.8281 6.28125 19.8281 8.53125C19.8281 10.8655 21.7124 12.75 24.0469 12.75H28.2656C29.8125 12.75 31.0781 14.0156 31.0781 15.5625C31.0781 17.1094 29.8125 18.375 28.2656 18.375H19.8281C19.8281 19.9219 18.5625 21.1875 17.0156 21.1875H8.57813C8.1001 21.1875 7.64991 21.2999 7.25635 21.525C8.04375 29.203 13.978 35.3343 21.5438 36.4594C20.475 35.4469 19.8281 34.0125 19.8281 32.4375C19.8281 30.8906 21.0938 29.625 22.6406 29.625H28.2656V26.8125C28.2656 25.2656 29.5313 24 31.0781 24H39.5156C39.825 24 40.1343 23.9437 40.4156 23.8594C40.7531 22.5655 40.9219 21.1875 40.9219 19.7812C40.9219 10.4719 33.3563 2.90625 24.0469 2.90625ZM16.5937 15.1405C17.1562 14.6062 17.1562 13.7062 16.5937 13.1718L9.46866 6.01884C9.0751 6.89062 8.34375 7.62178 7.47188 8.01553L14.625 15.1405C15.1312 15.7033 16.0879 15.703 16.5937 15.1405ZM24.0469 45.1875H26.8594V42.1125C25.9312 42.2249 25.0032 42.2812 24.0469 42.2812V45.1875Z" fill="white" fill-opacity="0.58"/>
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_240_8648">
+                                <rect width="48" height="48" fill="white"/>
+                              </clipPath>
+                            </defs>
+                        </svg>
+                        <span class="font-semibold text-base">Unlimited Search by Country Results</span>
+                    </div>
+                    <!-- plan3 -->
+                    <div class="flex md:flex-col items-center self-stretch md:flex-[1_0_0] gap-4 p-4 rounded-sm border border-zinc-600 hover:border-cyan-400 hover:bg-zinc-700 hover:shadow-md hover:scale-[1.02] transition-all duration-300 ease-in-out cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="49" height="48" viewBox="0 0 49 48" fill="none">
+                            <path d="M39.5728 0H9.57275C8.79613 0 8.1665 0.629625 8.1665 1.40625V46.5915C8.1665 47.696 9.38141 48.3694 10.3181 47.784L24.5728 38.8748L38.8274 47.784C39.7641 48.3694 40.979 47.6961 40.979 46.5915V1.40625C40.979 0.629625 40.3494 0 39.5728 0Z" fill="#811FD4"/>
+                            <path d="M29.1331 29.0125L24.5728 26.6151L20.0125 29.0126C18.9809 29.5551 17.7751 28.679 17.9722 27.5303L18.8431 22.4522L15.1538 18.8559C14.3191 18.0424 14.7797 16.6249 15.9331 16.4574L21.0316 15.7165L23.3117 11.0964C23.8275 10.0512 25.3179 10.0512 25.8338 11.0964L28.1138 15.7165L33.2123 16.4574C34.3658 16.625 34.8263 18.0424 33.9917 18.8559L30.3023 22.4521L31.1733 27.5302C31.3705 28.679 30.1647 29.555 29.1331 29.0125Z" fill="white"/>
+                        </svg>
+                        <span class="font-semibold text-base">Create collections of your favorite players</span>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Payment History -->
+            <div class="flex flex-col items-start gap-6 self-stretch">
+                <span class="font-medium text-xl">Payment History</span>
+
+                <div class="flex self-stretch items-start py-4 px-6 border border-zinc-600">
+                    <div class="flex items-center justify-center gap-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <path d="M10.0184 37.9815L13.3473 41.31C13.7285 41.6912 14.3459 41.6912 14.7272 41.31L18.056 37.9815L21.3845 41.31C21.7657 41.6912 22.3835 41.6912 22.7644 41.31L26.0932 37.9815L29.4221 41.31C29.8029 41.6912 30.4207 41.6912 30.8016 41.31L34.1304 37.9815L37.1498 41.0005C37.5183 41.3693 38.1489 41.1082 38.1489 40.5867V1.97558C38.1489 1.43689 37.7123 1 37.1733 1H6.97558C6.43689 1 6 1.43689 6 1.97558V40.5867C6 41.1082 6.63061 41.3697 6.99939 41.0005L10.0184 37.9815Z" fill="#DDF5FF"/>
+                            <rect x="11" y="9" width="15" height="2" rx="1" fill="#1B283F"/>
+                            <rect x="28" y="9" width="6" height="2" rx="1" fill="#1B283F"/>
+                            <rect x="11" y="15" width="20" height="2" rx="1" fill="#1B283F"/>
+                            <rect x="11" y="21" width="15" height="2" rx="1" fill="#1B283F"/>
+                            <circle cx="35" cy="36" r="11" fill="#FD4755" stroke="#1A1E2C" stroke-width="2"/>
+                            <path d="M38.8602 38.381L36.9157 36.4365C36.6746 36.1955 36.6746 35.8047 36.9157 35.5636L38.8602 33.6191C39.2687 33.2106 39.2687 32.5483 38.8602 32.1398C38.4516 31.7313 37.7894 31.7313 37.3809 32.1398L35.4364 34.0842C35.1954 34.3253 34.8046 34.3253 34.5635 34.0842L32.619 32.1397C32.2105 31.7312 31.5482 31.7312 31.1397 32.1397C30.7312 32.5482 30.7312 33.2105 31.1397 33.619L33.0842 35.5636C33.3253 35.8046 33.3253 36.1954 33.0842 36.4364L31.1397 38.381C30.7312 38.7895 30.7312 39.4517 31.1397 39.8603C31.5482 40.2688 32.2105 40.2688 32.619 39.8603L34.5635 37.9158C34.8046 37.6747 35.1954 37.6747 35.4364 37.9158L37.3809 39.8603C37.7895 40.2688 38.4517 40.2688 38.8602 39.8603C39.2687 39.4518 39.2687 38.7895 38.8602 38.381Z" fill="white"/>
+                        </svg>
+                        <span class="text-lg font-medium">You have no payment history</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div> 
+{% endblock content %}

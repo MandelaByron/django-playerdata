@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+
+<form method="post" action="{% url 'account_email' %}" novalidate>
+  {% csrf_token %}
+
+  <div class="mb-5 space-y-3">
+    <div class="relative col-span-2">
+      {% render_field form.email class="input w-full bg-[#313131] border border-white/10 backdrop-blur-sm focus:ring-1 focus:ring-fuchsia-700 focus:outline-none focus:ring-offset-0 placeholder-gray-400" placeholder="Enter your new email" %}
+      
+      {% if form.email.errors %}
+        <p class="text-sm text-red-400 mt-1">
+          {{ form.email.errors.0 }}
+        </p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="flex space-x-3">
+    <a href="{% url 'account_email' %}" class="flex items-center font-semibold text-center rounded-xl bg-zinc-700 text-sm h-[40px] px-4">Cancel</a>
+    <button type="submit" class="font-semibold text-center rounded-xl bg-fuchsia-700 text-white hover:bg-fuchsia-600 text-sm h-[40px] px-4">Save Changes</button>
+  </div>
+
+</form>
+
+
+
+{% endblock %}

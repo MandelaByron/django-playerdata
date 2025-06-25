@@ -1,0 +1,27 @@
+<div class="col-span-9">
+    <div class="mb-2 text-sm">
+      <span class="">{{ request.POST.email }}</span>
+    </div>
+    <div class="flex items-center p-4 space-x-2 text-sm rounded-md bg-orange-100 text-orange-700 max-w-md">
+      <span class="self-start">
+        <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.054 20H4.813a1.814 1.814 0 0 1-.904-.232 1.786 1.786 0 0 1-.664-.648 1.758 1.758 0 0 1-.004-1.782l3.593-6.211 3.594-6.212c.155-.277.383-.508.66-.67a1.813 1.813 0 0 1 2.484.67l3.594 6.212 3.593 6.211a1.758 1.758 0 0 1-.004 1.782c-.16.27-.389.494-.664.648a1.814 1.814 0 0 1-.904.232h-7.133Z" stroke="#C34C09" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 18a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" fill="#C34C09"></path><path d="M12 9v4" stroke="#C34C09" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </span>
+      <span>
+        <div>
+          <span>Your email will be changed to {{ request.POST.email }}. Please check your inbox to verify your new email.</span>
+          <div class="mt-4">
+            <div class="inline-block">
+              <a class="mr-2 underline" role="button">Resend verification email</a>
+            </div>
+            <div class="inline-block">
+              <a class="underline" role="button"
+                 hx-get="{% url 'general-settings' %}"
+                 hx-target="#change-email-button"
+                 hx-swap="outerHTML">Cancel email change</a>
+            </div>
+          </div>
+        </div>
+      </span>
+    </div>
+  </div>
+  

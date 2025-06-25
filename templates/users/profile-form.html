@@ -1,0 +1,142 @@
+{% load static %}
+{% load widget_tweaks %}
+
+{% if htmx %}
+    {% include "users/sidebar.html" %}
+{% endif %}
+
+<div class="col-span-12 sm:col-span-9">
+    <div class="rounded-lg bg-[#313131] border border-zinc-600">
+    
+        <!-- Title -->
+        <div class="p-5">
+            <h2 class="mb-3 text-xl font-bold">Profile</h2>
+            <p class="text-sm">This information will be displayed on your public profile.</p>
+        </div>
+    
+        <form  method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="divide-y divide-zinc-500">
+                <!-- profile picture -->
+                <div class="bg-[#313131] p-3 sm:p-4">
+                    <div class="grid grid-cols-12 items-start pl-1 sm:items-center">
+                        <div class="col-span-3">
+                            <div class="flex flex-col flex-wrap pl-0 text-sm sm:flex-row sm:items-center">
+                                <span>Profile Picture</span>
+                            </div>
+                        </div>
+    
+                        <div class="col-span-9">
+                            <div class="inline-flex items-center" id="avatar_container">
+                                {{ form.avatar }}
+                                <div class="relative mr-2 h-16 w-16 overflow-hidden rounded-full bg-gray-300">
+                                    <img id="avatar-preview" src="{% if form.avatar.value %}{{ form.avatar.value.url }}{% else %}{% static '/media/profile-avatar.jpg' %}{% endif %}" alt="{{object.fullname}}" class="h-full w-full object-cover">
+                                </div>
+                                <div class="flex flex-col justify-center">
+                                    <span class="mb-1 text-xs text-gray-400">Max file size: 5 MB</span>
+                                    <button type="button" onclick="document.getElementById('id_avatar').click()" class="cursor-pointer font-semibold text-center rounded-xl bg-fuchsia-700 border border-fuchsia-400 text-xs px-4 py-2">Change Photo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- first and last name -->
+                <div class="bg-[#313131] p-3 sm:p-4 space-y-4">
+                    <div class="grid grid-cols-12 items-start pl-1 sm:items-center">
+                        <!-- first name -->
+                        <div class="col-span-3">
+                            <div class="flex flex-col flex-wrap pl-0 text-sm sm:flex-row sm:items-center">
+                                <label for="{{ form.first_name.id_for_label }}" class="text-sm font-semibold">First Name</label>
+                            </div>                                      
+                        </div>
+    
+                        <div class="col-span-9">
+                            <div class="relative col-span-2">
+                                {{form.first_name|add_class:"input w-full bg-[#313131] border border-white/10 backdrop-blur-sm focus:ring-1 focus:ring-fuchsia-700 focus:outline-none focus:ring-offset-0"}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 items-start pl-1 sm:items-center">
+                        <!-- last name -->
+                        <div class="col-span-3">
+                            <div class="flex flex-col flex-wrap pl-0 text-sm sm:flex-row sm:items-center">
+                                <span>Last name</span>
+                            </div>                                      
+                        </div>
+    
+                        <div class="col-span-9">
+                            <div class="relative col-span-2">
+                                {{form.last_name|add_class:"input w-full bg-[#313131] border border-white/10 backdrop-blur-sm focus:ring-1 focus:ring-fuchsia-700 focus:outline-none focus:ring-offset-0"}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="bg-[#313131] p-3 sm:p-4 space-y-4">
+                    <div class="grid grid-cols-12 items-start pl-1 sm:items-center">
+                        <!-- Profile URL -->
+                        <div class="col-span-3">
+                            
+                            <div class="flex flex-col flex-wrap pl-0 text-sm sm:flex-row sm:items-center">
+                                <span>Profile URL</span>
+                            </div>                                      
+                        </div>
+    
+                        <div class="col-span-9">
+                            <div>
+                                <div class="relative col-span-2">
+                                    <span class="absolute top-0 bottom-0 left-0 flex items-center pl-3 text-sm text-zinc-300">kickoff.com/</span>
+                                    {{form.slug_user|add_class:"w-full rounded-xl border border-white/10 bg-[#313131] text-sm placeholder-gray-400  focus:outline-none focus:ring-1 focus:ring-fuchsia-700 py-3 pl-[96px]"}}
+                                    
+                                    <!-- <input type="text" class="input bg-[#313131] border border-white/10 backdrop-blur-sm focus:ring-2 focus:ring-fuchsia-700 focus:outline-none focus:ring-offset-0" name="firstName" value="Byron"> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="bg-[#313131] p-3 sm:p-4 space-y-4 text-right sticky bottom-0 rounded-b-xl">
+                    <!-- <button type="submit" class="font-semibold text-center rounded-xl bg-fuchsia-700 text-white hover:bg-fuchsia-600 opacity-30 cursor-not-allowed text-sm h-[40px] px-4" disabled="">Save changes</button> -->
+                    <button type="submit" class="font-semibold text-center rounded-xl bg-fuchsia-700 text-white hover:bg-fuchsia-600  text-sm h-[40px] px-4">Save changes</button>
+                </div>
+            </div>
+            {% if form.errors %}
+                <div class="bg-red-950 text-red-100 p-3 rounded mb-3">
+                    <ul>
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                        <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById('id_avatar').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('avatar-preview').src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+<script>
+    // Auto-dismiss alerts after 5 seconds (5000ms)
+    setTimeout(() => {
+      document.querySelectorAll('[role="alert"]').forEach(alert => {
+        alert.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+        setTimeout(() => alert.remove(), 500); // optional: fully remove from DOM after fade
+      });
+    }, 5000);
+</script>
+
+<!-- profile-form.html -->

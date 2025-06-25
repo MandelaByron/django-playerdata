@@ -1,0 +1,94 @@
+
+<!-- Navigation Section -->
+
+<div class="navbar lg:justify-between bg-[#313131] shadow-sm">
+    <!-- Nav Links -->
+    <div class="navbar sm:w-1/4 lg:hidden">
+        <div class="dropdown">
+        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+        </div>
+        <ul
+            tabindex="0"
+            class="menu menu-lg dropdown-content bg-(--bg-primary) rounded-box z-1 mt-3 w-52 p-2 shadow">
+            <li><a class="rounded-lg px-3 py-2 text-sm hover:bg-[#7f1fd46c]">About Us</a></li>
+            <li><a class="rounded-lg px-3 py-2 text-sm hover:bg-[#7f1fd46c]">How it Works</a></li>
+            <li><a class="rounded-lg px-3 py-2 text-sm hover:bg-[#7f1fd46c]">FAQs</a></li>
+            <li><a class="rounded-lg px-3 py-2 text-sm hover:bg-[#7f1fd46c]">Contact Us</a></li>
+        </ul>
+        </div>
+    </div>
+
+    <div class="hidden lg:flex ml-auto sm:ml-0">
+        <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+    </div>
+
+    <div class="hidden lg:flex">
+        <ul class="flex items-center space-x-3 font-medium text-base leading-normal text-white m-auto menu menu-horizontal px-1">
+            <li>
+                <a class="py-2 px-3 bg-fuchsia-700 rounded-lg">Home</a>
+            </li>
+            <li><a class="rounded-lg px-3 py-2 text-sm hover:bg-[#7f1fd46c]">About Us</a></li>
+            <li><a class="rounded-lg px-3 py-2 text-sm hover:bg-[#7f1fd46c]">How it Works</a></li>
+            <li><a class="rounded-lg px-3 py-2 text-sm hover:bg-[#7f1fd46c]">FAQs</a></li>
+            <li><a class="rounded-lg px-3 py-2 text-sm hover:bg-[#7f1fd46c]">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <div class="hidden lg:flex gap-2 lg:ml-0">
+        <input type="text" placeholder="Search" class="input bg-[#313131] border border-white/10 backdrop-blur-sm focus:ring-2 focus:ring-fuchsia-700 focus:outline-none focus:ring-offset-0 w-24 md:w-auto" />
+        <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+            <div class="w-10 rounded-full">
+            <img
+                alt="Tailwind CSS Navbar component"
+                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            </div>
+        </div>
+        <ul
+            tabindex="0"
+            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+            <li>
+            <a class="justify-between">
+                Profile
+                <span class="badge">New</span>
+            </a>
+            </li>
+            <li><a>Settings</a></li>
+            <li><a>Logout</a></li>
+        </ul>
+        </div>
+    </div>
+
+    <div class="hidden max-lg:flex w-1/4 justify-end ml-auto">
+        <button class="btn btn-ghost btn-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+            <path d="M11 19.5C15.4183 19.5 19 15.9183 19 11.5C19 7.08172 15.4183 3.5 11 3.5C6.58172 3.5 3 7.08172 3 11.5C3 15.9183 6.58172 19.5 11 19.5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 21.4999L16.65 17.1499" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        </button>
+        <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+            <div class="">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                <path d="M20 21.5V19.5C20 18.4391 19.5786 17.4217 18.8284 16.6716C18.0783 15.9214 17.0609 15.5 16 15.5H8C6.93913 15.5 5.92172 15.9214 5.17157 16.6716C4.42143 17.4217 4 18.4391 4 19.5V21.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 11.5C14.2091 11.5 16 9.70914 16 7.5C16 5.29086 14.2091 3.5 12 3.5C9.79086 3.5 8 5.29086 8 7.5C8 9.70914 9.79086 11.5 12 11.5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            </div>
+        </div>
+        <ul
+            tabindex="0"
+            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+            <li>
+            <a class="justify-between">
+                Profile
+                <span class="badge">New</span>
+            </a>
+            </li>
+            <li><a>Settings</a></li>
+            <li><a>Logout</a></li>
+        </ul>
+        </div>
+    </div>
+
+</div>

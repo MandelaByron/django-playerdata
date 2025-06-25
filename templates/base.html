@@ -1,0 +1,35 @@
+<!-- base.html -->
+{% load static tailwind_tags %}
+{% load django_htmx %}
+{% load widget_tweaks %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="{% static 'src/signup.js' %}"></script> -->
+    {% htmx_script %}
+    <script src="{% static 'src/password-toggle.js' %}"></script>
+    <!-- <script src="{% static 'src/password-validation.js' %}"></script> -->
+    <title>Project Title</title>
+    {% tailwind_css %}
+
+
+</head>
+<body class="bg-(--bg-primary) text-white font-poppins">
+    {% block main_messages %}
+      {% include "includes/messages.html" %}
+    {% endblock main_messages %}
+
+    {% include "includes/header.html" %}
+
+    {% block breadcrumbs %}{% endblock breadcrumbs %}
+
+    <main class="px-8 max-w-7xl mx-auto py-12">
+      {% block content %}{% endblock content %}
+    </main>
+
+
+</body>
+</html>
