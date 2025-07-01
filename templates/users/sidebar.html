@@ -2,21 +2,21 @@
 <div class="col-span-12 sm:col-span-3">
     <div class="rounded-lg bg-[#313131] border border-zinc-600">
         <div class="flex flex-col space-y-1 pt-5 pb-3">
-            <button hx-get="{% url 'general-settings' %}" hx-target="#settings-wrapper" hx-swap="innerHTML" 
+            <a href="{% url 'general-settings' %}" 
                     class="border-l-4 py-1 pl-5 text-left text-base hover:text-fuchsia-600 
                         {% if active_section == 'general' %}border-fuchsia-700 font-medium text-fuchsia-600{% else %}border-transparent{% endif %}">
                 General
-            </button>
-            <button hx-get="{% url 'profile-settings' %}" hx-target="#settings-wrapper" hx-swap="innerHTML" 
+            </a>
+            <a href="{% url 'profile-settings' %}" 
                     class="border-l-4 py-1 pl-5 text-left text-base hover:text-fuchsia-600 
                         {% if active_section == 'profile' %}border-fuchsia-700 font-medium text-fuchsia-600{% else %}border-transparent{% endif %}">
                 Profile
-            </button>
-            <button hx-get="" hx-target="#settings-wrapper" hx-swap="innerHTML" 
+            </a>
+            <a href="" 
                     class="border-l-4 py-1 pl-5 text-left text-base hover:text-fuchsia-600 
                         {% if active_section == 'notifications' %}border-fuchsia-700 font-medium text-fuchsia-600{% else %}border-transparent{% endif %}">
                 Notifications
-            </button>
+            </a>
         </div>
     </div>
 </div>

@@ -5,7 +5,7 @@
     <span>Current email:</span>
     <span class="font-bold">{{ user.email }}</span>
 </div>
-<form method="post" hx-post="{% url 'account_email' %}" hx-target="#change-email-button" hx-swap="outerHTML">
+<form method="post" hx-post="{% url 'account_email' %}" hx-target="#change-email-button" hx-swap="innerHTML">
     {% csrf_token %}
     <div class="mb-5 space-y-3">
       <div class="relative col-span-2">

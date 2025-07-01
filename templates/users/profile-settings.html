@@ -8,27 +8,7 @@
 
 {% block settings_content %}
     {% include "users/profile-form.html" %}
-    <script>
-        document.getElementById('id_avatar').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    document.getElementById('avatar-preview').src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
-    <script>
-        // Auto-dismiss alerts after 5 seconds (5000ms)
-        setTimeout(() => {
-          document.querySelectorAll('[role="alert"]').forEach(alert => {
-            alert.classList.add('opacity-0', 'transition-opacity', 'duration-500');
-            setTimeout(() => alert.remove(), 500); // optional: fully remove from DOM after fade
-          });
-        }, 5000);
-    </script>
+
 {% endblock  %}
 
 <!-- profile-settings.html -->

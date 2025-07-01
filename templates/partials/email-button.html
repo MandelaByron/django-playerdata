@@ -1,0 +1,32 @@
+
+{% if messages %}
+    <div class="col-span-12 sm:col-span-9" id="django-messages" hx-swap-oob="true">
+        {% if messages %}
+            {% for message in messages %}
+            <div role="alert" class="alert alert-{{ message.tags }} alert-soft transition-opacity duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ message }}</span>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="flex flex-col space-y-2"></div>
+        {% endif %}
+    </div>
+{% endif %}
+
+<div class="col-span-9" id="change-email-button">
+    <div class="mb-2 text-sm">
+        <span>{{ user.email }}</span>
+
+    </div>
+    <div>
+        <button hx-get="{% url 'account_email' %}" hx-target="#change-email-button" hx-swap="innerHTML" class="text-center rounded-xl text-fuchsia-600 hover:text-fuchsia-500 font-normal text-sm px-0 py-0 h-auto">
+            Change email
+        </button>
+    </div>
+
+</div>
+
+<!-- email-button.html -->

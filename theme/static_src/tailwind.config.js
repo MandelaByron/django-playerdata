@@ -12,6 +12,13 @@ module.exports = {
         '../../**/*.py'
     ],
 
-    plugins: [require("daisyui")],
+    
+    
+    safelist: [
+        'alert-error',
+        'alert-success',
+        'alert-info',
+        'alert-warning',
+      ],
 
 }

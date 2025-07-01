@@ -6,6 +6,7 @@ from users.manager import UserManager
 import os
 from nanoid import generate
 from django.urls import reverse
+from django.conf import settings
 
 def get_random_filename(instance, filename):
     # Extract the file extension from the original filename
@@ -46,6 +47,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def fullname(self):
         return f'{self.first_name} {self.last_name}'
+    
+    @property
+    def avatar_url(self):
+        if self.avatar:
+            return self.avatar.url
+        return settings.MEDIA_URL + 'profile-avatar.jpg'
 
     def __str__(self):
         return self.email

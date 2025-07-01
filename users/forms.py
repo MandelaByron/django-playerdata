@@ -4,7 +4,10 @@ from django import forms
 from django.contrib.auth.forms import UserChangeForm
 from users.models import User
 from .widgets import CustomClearableFileInput
-
+from allauth.account.models import EmailAddress
+from allauth.account.forms import SetPasswordField, ChangePasswordForm
+from allauth.account.internal import flows
+from django.contrib.auth import update_session_auth_hash
 class CustomSignupForm(SignupForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -38,6 +41,14 @@ class CustomSignupForm(SignupForm):
 
 
 class ProfileUpdateForm(forms.ModelForm):
+
+    slug_user = forms.SlugField(
+        error_messages= {
+            'unique':'This username is already taken. Please choose another one.'
+        },
+
+        required= True
+    )
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'avatar', 'slug_user']
@@ -47,6 +58,7 @@ class ProfileUpdateForm(forms.ModelForm):
                 'accept': 'image/*'
             }),
         }
+
 
 
 class CustomAddEmailForm(AddEmailForm):
@@ -60,8 +72,33 @@ class CustomAddEmailForm(AddEmailForm):
             'placeholder': 'Enter your new email',
         })
 
+
+    
     def clean_email(self):
-        email = self.cleaned_data['email'].lower()
-        if "spam" in email:
-            raise forms.ValidationError("Invalid email address.")
-        return email
+        value = super().clean_email()
+
+        # Additional enforcement: make sure the email isn't in use by others
+        if EmailAddress.objects.filter(email=value).exclude(user=self.user).exists():
+            raise forms.ValidationError("This email is not valid or available for use.")
+
+        return value
+    
+class SinglePasswordChangeForm(ChangePasswordForm):
+    password = SetPasswordField(label=("New Password"))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        # Only keep password1 field
+        self.fields = {
+            "password": self.fields["password"],
+        }
+
+        # Set user for password validation
+        self.fields["password"].user = self.user
+
+    def save(self, request=None, *args, **kwargs):
+        flows.password_change.change_password(self.user, self.cleaned_data["password"])
+        if request:
+            update_session_auth_hash(request, self.user)
+        return self.user

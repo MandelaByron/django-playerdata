@@ -7,14 +7,15 @@
 
 <div class="col-span-12 sm:col-span-9">
     <div class="rounded-lg bg-[#313131] border border-zinc-600">
-    
+        
         <!-- Title -->
         <div class="p-5">
             <h2 class="mb-3 text-xl font-bold">Profile</h2>
+            <div id="username_load" class="mt-1 text-xs text-zinc-400 htmx-indicator">Loading...</div>
             <p class="text-sm">This information will be displayed on your public profile.</p>
         </div>
     
-        <form  method="post" enctype="multipart/form-data">
+        <form id="profile-form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="divide-y divide-zinc-500">
                 <!-- profile picture -->
@@ -71,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-    
+                <!-- Slug -->
                 <div class="bg-[#313131] p-3 sm:p-4 space-y-4">
                     <div class="grid grid-cols-12 items-start pl-1 sm:items-center">
                         <!-- Profile URL -->
@@ -86,10 +87,26 @@
                             <div>
                                 <div class="relative col-span-2">
                                     <span class="absolute top-0 bottom-0 left-0 flex items-center pl-3 text-sm text-zinc-300">kickoff.com/</span>
-                                    {{form.slug_user|add_class:"w-full rounded-xl border border-white/10 bg-[#313131] text-sm placeholder-gray-400  focus:outline-none focus:ring-1 focus:ring-fuchsia-700 py-3 pl-[96px]"}}
-                                    
-                                    <!-- <input type="text" class="input bg-[#313131] border border-white/10 backdrop-blur-sm focus:ring-2 focus:ring-fuchsia-700 focus:outline-none focus:ring-offset-0" name="firstName" value="Byron"> -->
+                                    <input
+                                        type="text"
+                                        name="{{ form.slug_user.name }}"
+                                        id="{{ form.slug_user.id_for_label }}"
+                                        class="w-full rounded-xl border border-white/10 bg-[#313131] text-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-fuchsia-700 py-3 pl-[96px]"
+                                        hx-get="{% url 'search-username' %}"
+                                        hx-trigger="keyup changed delay:500ms"
+                                        hx-target="#username_feedback"
+                                        hx-indicator="#username_load"
+                                        required
+                                        value="{{ form.slug_user.value|default_if_none:'' }}"
+                                        placeholder="{{ form.slug_user.field.widget.attrs.placeholder }}"
+                                    >
                                 </div>
+                                <div id="username_load" class="mt-1 text-xs text-zinc-400 htmx-indicator">Loading...</div>
+                                
+                                <!-- Loading indicator -->
+
+                                <!-- Username availability feedback will go here -->
+                                <div id="username_feedback" class="mt-1 text-xs"></div>
                             </div>
                         </div>
                     </div>
@@ -97,7 +114,7 @@
     
                 <div class="bg-[#313131] p-3 sm:p-4 space-y-4 text-right sticky bottom-0 rounded-b-xl">
                     <!-- <button type="submit" class="font-semibold text-center rounded-xl bg-fuchsia-700 text-white hover:bg-fuchsia-600 opacity-30 cursor-not-allowed text-sm h-[40px] px-4" disabled="">Save changes</button> -->
-                    <button type="submit" class="font-semibold text-center rounded-xl bg-fuchsia-700 text-white hover:bg-fuchsia-600  text-sm h-[40px] px-4">Save changes</button>
+                    <button type="submit" id="submit-btn" class="font-semibold text-center rounded-xl bg-fuchsia-700 text-white hover:bg-fuchsia-600 opacity-30 cursor-not-allowed text-sm h-[40px] px-4" disabled>Save changes</button>
                 </div>
             </div>
             {% if form.errors %}
@@ -130,13 +147,52 @@
     });
 </script>
 <script>
-    // Auto-dismiss alerts after 5 seconds (5000ms)
-    setTimeout(() => {
-      document.querySelectorAll('[role="alert"]').forEach(alert => {
-        alert.classList.add('opacity-0', 'transition-opacity', 'duration-500');
-        setTimeout(() => alert.remove(), 500); // optional: fully remove from DOM after fade
-      });
-    }, 5000);
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("profile-form");
+        const submitBtn = document.getElementById("submit-btn");
+        const requiredFields = form.querySelectorAll("[required]");
+        const initialData = new FormData(form);
+    
+        function isFormChanged() {
+            const currentData = new FormData(form);
+            for (let [key, value] of currentData.entries()) {
+                if (value !== initialData.get(key)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    
+        function isFormValid() {
+            for (let field of requiredFields) {
+                if (!field.value.trim()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    
+        function updateButtonState() {
+            if (isFormChanged() && isFormValid()) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove("opacity-30", "cursor-not-allowed");
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.classList.add("opacity-30", "cursor-not-allowed");
+            }
+        }
+    
+        // Watch for input on all fields
+        form.addEventListener("input", updateButtonState);
+    
+        // Special case for file input
+        const avatarInput = document.getElementById("id_avatar");
+        if (avatarInput) {
+            avatarInput.addEventListener("change", updateButtonState);
+        }
+    });
 </script>
+    
+    
 
 <!-- profile-form.html -->

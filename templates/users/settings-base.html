@@ -12,7 +12,7 @@
         </div>
 
         {% block messages %}
-            <div class="col-span-12 sm:col-span-9">
+            <div class="col-span-12 sm:col-span-9" id="django-messages" hx-swap-oob="true">
                 {% if messages %}
                     {% for message in messages %}
                     <div role="alert" class="alert alert-{{ message.tags }} alert-soft transition-opacity duration-500">

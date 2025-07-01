@@ -1,19 +1,23 @@
-
-from django.http import HttpRequest
-from django.http.response import HttpResponse as HttpResponse
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, redirect
-from django.urls import reverse
+import time
 from django.contrib import messages
 from django.views.generic import DetailView, UpdateView, TemplateView
 from users.models import User
-from allauth.account.views import EmailView
-from .forms import ProfileUpdateForm,CustomAddEmailForm
-def profile_view(request):
+from allauth.account.views import EmailView, PasswordChangeView
+from .forms import ProfileUpdateForm,CustomAddEmailForm, SinglePasswordChangeForm
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 
-    return render(request, template_name="users/profile.html")
 
-class ProfileDetailView(DetailView):
+def search_username(request):
+    query = request.GET.get("slug_user", "")
+    user = User.objects.filter(slug_user=query).first()
+    time.sleep(1)
+    return render(request, 'partials/search-feedback.html', {
+        "user_found": bool(user)
+    })
+
+class ProfileDetailView(LoginRequiredMixin,DetailView):
     model = User
 
     context_object_name = "user"
@@ -24,7 +28,7 @@ class ProfileDetailView(DetailView):
 
 
 
-class SettingsBaseView(UpdateView):
+class SettingsBaseView(LoginRequiredMixin, UpdateView):
     model = User
     template_name = ""
     form_class = None
@@ -37,6 +41,7 @@ class SettingsBaseView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["active_section"] = self.active_section
+        context['title'] = 'Profile Settings'
         return context
 
     def get(self, request, *args, **kwargs):
@@ -62,21 +67,21 @@ class ProfileUpdateView(SettingsBaseView):
     active_section = "profile"
     success_url = reverse_lazy("profile-settings")
 
-# class GeneralsUpdateView(SettingsBaseView):
-#     template_name = "users/general-settings.html"
-#     htmx_partial = 'users/general-form.html'
-#     form_class = EmailAddress
-#     active_section = 'general'
-#     success_url = reverse_lazy("general-settings")
     
 
-class GeneralsUpdateView(TemplateView):
+class GeneralsUpdateView(LoginRequiredMixin,TemplateView):
 
     template_name = "users/general-settings.html"
 
     htmx_partial = 'users/general-form.html'
 
     active_section = 'general'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["active_section"] = self.active_section
+        context['title'] = 'Account Settings'
+        return context
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
@@ -86,10 +91,14 @@ class GeneralsUpdateView(TemplateView):
 
         return super().get(request, *args, **kwargs)
 
-class CustomEmailView(EmailView):
+class CustomEmailView(LoginRequiredMixin, EmailView):
     form_class = CustomAddEmailForm
 
     htmx_partial = 'partials/email-form.html'
+
+    template_name = 'users/general-settings.html'
+
+
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
@@ -109,6 +118,42 @@ class CustomEmailView(EmailView):
                 })
             return redirect("account_email")
         else:
+            print("invalid-form")
             if request.headers.get("HX-Request"):
-                return render(request, self.htmx_partial, {"form": form})
-            return self.form_invalid(form)
+                messages.error(self.request, "This email is not valid or available for use.")
+                return render(request, "partials/email-button.html", {"status": "invalid"})
+            else:
+                messages.error(self.request, "This email is not valid or available for use.")
+
+class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+    htmx_partial = 'partials/password-change-form.html'
+
+    template_name = 'users/general-settings.html'
+
+    form_class = SinglePasswordChangeForm
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+
+        if request.headers.get("HX-Request"):
+            context["htmx"] = True
+            return render(request, self.htmx_partial, context)
+        return super().get(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+
+        if form.is_valid():
+            form.save(request)
+            if request.headers.get("HX-Request"):
+                messages.success(self.request,"Password updated successfully")
+                return render(request, "partials/password-button.html")
+            return redirect("general-settings")
+        else:
+            print("invalid password form")
+            if request.headers.get("HX-Request"):
+                messages.error(self.request, "The Password entered is invalid.")
+                return render(request, "partials/password-button.html", {"status": "invalid"})
+            else:
+                messages.error(self.request, "The Password entered is invalid.")

@@ -11,7 +11,7 @@
           <span>Your email will be changed to {{ request.POST.email }}. Please check your inbox to verify your new email.</span>
           <div class="mt-4">
             <div class="inline-block">
-              <a class="mr-2 underline" role="button">Resend verification email</a>
+              <a class="mr-2 underline" role="button" href="{% url 'account_email_verification_sent' %}">Resend verification email</a>
             </div>
             <div class="inline-block">
               <a class="underline" role="button"

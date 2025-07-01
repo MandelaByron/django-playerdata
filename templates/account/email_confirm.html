@@ -1,0 +1,59 @@
+{% extends "account/action-base.html" %}
+{% load i18n %}
+{% load account %}
+{% load allauth %}
+
+{% block content %}
+  
+
+{% if confirmation %}
+    {% if can_confirm %}
+        <div class="flex items-center justify-center">
+            <div class="bg-white/2">
+                <dotlottie-player
+                src="https://lottie.host/ee401c02-69d4-4fa3-9c01-cecbb9d43de9/Q1XLyTka0g.lottie"
+                speed="1"
+                style="width: 300px; height: 300px"
+                loop
+                autoplay
+                ></dotlottie-player>
+            </div>
+        </div>
+        <h1 class="text-center text-2xl font-bold">Your email has been verified</h1>
+        <p class="text-center text-lg">
+            Your email address has been verified. You’re all set! 🪄
+        </p>
+        {% url 'account_login' as login_url %}
+            <a href="{{ login_url }}">
+            <button class="font-semibold text-center rounded-xl bg-fuchsia-700 text-white hover:bg-fuchsia-600 text-base px-6 h-[56px]">
+                Continue
+            </button>
+        </a>
+    {% else %}
+        <h1 class="text-center text-2xl font-bold">This email is already used</h1>
+        <p class="text-center text-lg">
+            This email has already been verified by another user. Please try logging in or use a different email address.
+        </p>
+        <a href="{% url 'account_login' %}">
+        <button class="font-semibold text-center rounded-xl bg-fuchsia-700 text-white hover:bg-fuchsia-600 text-base px-6 h-[56px]">
+            Continue to Login
+        </button>
+        </a>
+    {% endif %}
+{% else %}
+    <h1 class="text-center text-2xl font-bold">This link is no longer valid</h1>
+    <p class="text-center text-lg">
+    The link is expired or invalid. Please check if your email is not already verified, or request a new verification email from your account settings.
+    </p>
+    <a href="{% url 'account_email' %}">
+    <button class="font-semibold text-center rounded-xl bg-fuchsia-700 text-white hover:bg-fuchsia-600 text-base px-6 h-[56px]">
+        Go to Account Settings
+    </button>
+    </a>
+{% endif %}
+{% endblock content %}
+
+
+
+
+

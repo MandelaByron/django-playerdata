@@ -75,6 +75,17 @@ ACCOUNT_ADAPTER = 'users.adapters.AccountAdapter'
 
 ACCOUNT_CHANGE_EMAIL = True
 
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+ACCOUNT_LOGOUT_ON_GET =True
+
+ACCOUNT_REAUTHENTICATION_REQUIRED = True
+
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = False
+
+ACCOUNT_SESSION_REMEMBER = True
+
+
 #LOGIN_REDIRECT_URL = '/members/profile/'
 
 MIDDLEWARE = [
@@ -107,6 +118,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
 
                 #`allauth` needs this from django
                 'django.template.context_processors.request'

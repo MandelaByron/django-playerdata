@@ -11,25 +11,42 @@
     <!-- <script src="{% static 'src/signup.js' %}"></script> -->
     {% htmx_script %}
     <script src="{% static 'src/password-toggle.js' %}"></script>
+    <script src="{% static 'src/main.js' %}"></script>
     <!-- <script src="{% static 'src/password-validation.js' %}"></script> -->
-    <title>Project Title</title>
+    {% if title %}
+      <title>{{ title }}</title>
+    {% else %}
+      <title>Gym Life</title>
+    {% endif %}
     {% tailwind_css %}
 
 
 </head>
+<style>
+  .htmx-indicator {
+    display: none;
+}
+/* Show the indicator when it has htmx-request */
+.htmx-indicator.htmx-request {
+    display: block;
+}
+</style>
 <body class="bg-(--bg-primary) text-white font-poppins">
+  <div class="flex min-h-screen w-full flex-col justify-between">
+
+    {% include "includes/header.html" %}
     {% block main_messages %}
       {% include "includes/messages.html" %}
     {% endblock main_messages %}
-
-    {% include "includes/header.html" %}
-
+  
     {% block breadcrumbs %}{% endblock breadcrumbs %}
-
+  
     <main class="px-8 max-w-7xl mx-auto py-12">
       {% block content %}{% endblock content %}
     </main>
-
-
+  
+    {% include "includes/footer.html" %}
+  </div>
 </body>
+
 </html>
