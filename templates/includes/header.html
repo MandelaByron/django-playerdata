@@ -50,7 +50,7 @@
         <ul tabindex="0" class="menu menu-sm dropdown-content bg-zinc-800 rounded-box z-1 mt-3 w-52 p-2 shadow">
         {% if user.is_authenticated %}
           <li>
-            <a href="{% url 'profile' user.slug_user %}" class="justify-between">
+            <a href="{% url 'profile' user.username %}" class="justify-between">
               Profile
             </a>
           </li>

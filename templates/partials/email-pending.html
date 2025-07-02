@@ -1,6 +1,6 @@
 <div class="col-span-9">
     <div class="mb-2 text-sm">
-      <span class="">{{ request.POST.email }}</span>
+      <span class="">{{ email }}</span>
     </div>
     <div class="flex items-center p-4 space-x-2 text-sm rounded-md bg-orange-100 text-orange-700 max-w-md">
       <span class="self-start">
@@ -8,16 +8,25 @@
       </span>
       <span>
         <div>
-          <span>Your email will be changed to {{ request.POST.email }}. Please check your inbox to verify your new email.</span>
+          <span>Your email will be changed to {{ email }}. Please check your inbox to verify your new email.</span>
           <div class="mt-4">
             <div class="inline-block">
               <a class="mr-2 underline" role="button" href="{% url 'account_email_verification_sent' %}">Resend verification email</a>
             </div>
             <div class="inline-block">
-              <a class="underline" role="button"
-                 hx-get="{% url 'general-settings' %}"
-                 hx-target="#change-email-button"
-                 hx-swap="outerHTML">Cancel email change</a>
+              <form
+              hx-post="{% url 'cancel-email-change' %}"
+              hx-target="#change-email-button"
+              hx-swap="outerHTML"
+              class="inline-block"
+            >
+              {% csrf_token %}
+              <input type="hidden" name="email" value="{{ email }}">
+              <button type="submit" class="underline">
+                Cancel email change
+              </button>
+            </form>
+            
             </div>
           </div>
         </div>

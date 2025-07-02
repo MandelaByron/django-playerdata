@@ -130,10 +130,48 @@
                         <p class="text-sm text-gray-400 md:w-2/3">Permanently delete your KickOff account. You won’t be able to undo this.</p>
                     </div>
                     <div class="ml-auto min-h-0 leading-none">
-                        <button type="button" class="font-semibold text-center rounded-xl  text-red-500 cursor-pointer text-sm px-0 py-0 h-auto">Delete account</button>
+                        <button onclick="delete_modal.showModal()"  type="button" class="font-semibold text-center rounded-xl  text-red-500 cursor-pointer text-sm px-0 py-0 h-auto">Delete account</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!-- Delete Modal -->
+<dialog id="delete_modal" class="modal flex flex-col items-center">
+    <div class="modal-box top-12 flex flex-col space-y-8 p-6  bg-zinc-800  relative md:w-[50%]">
+        <form method="dialog" class="absolute right-0 top-0 pt-6 pr-6">
+            <button class="rounded-md  text-gray-400 hover:text-gray-400 cursor-pointer">
+                <span><svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 18 6 6M6 18 18 6" stroke="#8795A1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            </button>
+        </form>
+
+        <div class="flex items-center space-x-2">
+            <div class="">
+                <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.054 20H4.813a1.814 1.814 0 0 1-.904-.232 1.786 1.786 0 0 1-.664-.648 1.758 1.758 0 0 1-.004-1.782l3.593-6.211 3.594-6.212c.155-.277.383-.508.66-.67a1.813 1.813 0 0 1 2.484.67l3.594 6.212 3.593 6.211a1.758 1.758 0 0 1-.004 1.782c-.16.27-.389.494-.664.648a1.814 1.814 0 0 1-.904.232h-7.133Z" stroke="#D92600" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 18a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" fill="#D92600"></path><path d="M12 9v4" stroke="#D92600" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+            <span class="text-xl font-bold">Delete your account?</span>
+        </div>
+
+        <div class=" text-gray-500">
+            <p>Deleting your account will permanently remove your access to LottieFiles and erase all your data, including:</p>
+            <ul class="mt-4 list-disc pl-4">
+                <li>Your LottieFiles profile</li>
+                <li>Your workspaces and projects</li>
+                <li>Your private animations and collections</li>
+                <li>Your public animations, asset links and sharing links</li>
+                <li>Your access to animations and other design assets on LottieFiles</li>
+                <li>Your access to LottieFiles’s plugins</li>
+            </ul>
+        </div>
+
+        <div class="mt-8 flex items-center justify-end space-x-2">
+            <form method="POST" action="{% url 'account_delete' %}">
+                {% csrf_token %}
+                <button type="button" onclick="delete_modal.close()" class="text-center rounded-xl  text-white hover:text-fuchsia-700 font-semibold text-sm h-[40px] px-4">Cancel</button>
+                <button type="submit" class="font-semibold text-center rounded-xl bg-red-700 text-white hover:bg-red-500 text-sm h-[40px] px-4">Delete account</button>
+            </form>
+        </div>
+    </div>
+</dialog>
+

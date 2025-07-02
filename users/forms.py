@@ -42,7 +42,7 @@ class CustomSignupForm(SignupForm):
 
 class ProfileUpdateForm(forms.ModelForm):
 
-    slug_user = forms.SlugField(
+    username = forms.SlugField(
         error_messages= {
             'unique':'This username is already taken. Please choose another one.'
         },
@@ -51,7 +51,7 @@ class ProfileUpdateForm(forms.ModelForm):
     )
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'avatar', 'slug_user']
+        fields = ['first_name', 'last_name', 'avatar', 'username']
         widgets = {
             'avatar': CustomClearableFileInput(attrs={
                 'class': 'hidden',

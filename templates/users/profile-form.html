@@ -89,16 +89,16 @@
                                     <span class="absolute top-0 bottom-0 left-0 flex items-center pl-3 text-sm text-zinc-300">kickoff.com/</span>
                                     <input
                                         type="text"
-                                        name="{{ form.slug_user.name }}"
-                                        id="{{ form.slug_user.id_for_label }}"
+                                        name="{{ form.username.name }}"
+                                        id="{{ form.username.id_for_label }}"
                                         class="w-full rounded-xl border border-white/10 bg-[#313131] text-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-fuchsia-700 py-3 pl-[96px]"
                                         hx-get="{% url 'search-username' %}"
                                         hx-trigger="keyup changed delay:500ms"
                                         hx-target="#username_feedback"
                                         hx-indicator="#username_load"
                                         required
-                                        value="{{ form.slug_user.value|default_if_none:'' }}"
-                                        placeholder="{{ form.slug_user.field.widget.attrs.placeholder }}"
+                                        value="{{ form.username.value|default_if_none:'' }}"
+                                        placeholder="{{ form.username.field.widget.attrs.placeholder }}"
                                     >
                                 </div>
                                 <div id="username_load" class="mt-1 text-xs text-zinc-400 htmx-indicator">Loading...</div>

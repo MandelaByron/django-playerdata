@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    list_display = ['email', "first_name", "last_name", "is_staff", "slug_user","public_id"]
+    list_display = ['email', "first_name", "last_name", "is_staff", "username","public_id"]
     
     search_fields = ['email', "fist_name", "last_name"]
     
@@ -15,7 +15,7 @@ class UserAdmin(BaseUserAdmin):
         ),
         
         (
-            ("Personal Info", {"fields":('first_name', 'last_name', 'email','avatar','slug_user')})
+            ("Personal Info", {"fields":('first_name', 'last_name', 'email','avatar')})
         ),
 
         (

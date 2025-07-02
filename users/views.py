@@ -1,21 +1,45 @@
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, redirect
+from allauth.account.models import EmailAddress
 import time
 from django.contrib import messages
-from django.views.generic import DetailView, UpdateView, TemplateView
+from django.views.generic import DetailView, UpdateView, TemplateView, DeleteView
 from users.models import User
 from allauth.account.views import EmailView, PasswordChangeView
 from .forms import ProfileUpdateForm,CustomAddEmailForm, SinglePasswordChangeForm
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
-
+from django.contrib.auth.decorators import login_required
 
 def search_username(request):
-    query = request.GET.get("slug_user", "")
-    user = User.objects.filter(slug_user=query).first()
+    query = request.GET.get("username", "")
+    user = User.objects.filter(username=query).first()
     time.sleep(1)
     return render(request, 'partials/search-feedback.html', {
         "user_found": bool(user)
     })
+
+@login_required
+def cancel_email_change(request):
+    if request.method != "POST":
+        return HttpResponseBadRequest("Invalid request method.")
+
+    email_to_cancel = request.POST.get("email")
+    user = request.user
+
+    if not email_to_cancel:
+        messages.error("Email entered is invalid")
+        return render(request, "partials/email-button.html")
+
+    try:
+        email_obj = EmailAddress.objects.get(user=user, email=email_to_cancel, verified=False)
+    except EmailAddress.DoesNotExist:
+        messages.error("Email entered is invalid")
+        return render(request, "partials/email-button.html")
+
+    email_obj.remove()
+    messages.success(request, "Your email change request has been canceled.")
+    return render(request, "partials/email-button.html")
 
 class ProfileDetailView(LoginRequiredMixin,DetailView):
     model = User
@@ -23,8 +47,8 @@ class ProfileDetailView(LoginRequiredMixin,DetailView):
     context_object_name = "user"
 
     template_name = "users/profile.html"
-    slug_field = "slug_user"
-    slug_url_kwarg = "slug_user"
+    slug_field = "username"
+    slug_url_kwarg = "username"
 
 
 
@@ -56,7 +80,7 @@ class SettingsBaseView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         from django.contrib import messages
-        messages.success(self.request, "Settings updated successfully.")
+        messages.success(self.request, "Profile updated successfully.")
         return super().form_valid(form)
 
 
@@ -66,6 +90,10 @@ class ProfileUpdateView(SettingsBaseView):
     form_class = ProfileUpdateForm
     active_section = "profile"
     success_url = reverse_lazy("profile-settings")
+
+    # def test_func(self) -> bool | None:
+    #     user = self.get_object()
+    #     return user
 
     
 
@@ -118,7 +146,6 @@ class CustomEmailView(LoginRequiredMixin, EmailView):
                 })
             return redirect("account_email")
         else:
-            print("invalid-form")
             if request.headers.get("HX-Request"):
                 messages.error(self.request, "This email is not valid or available for use.")
                 return render(request, "partials/email-button.html", {"status": "invalid"})
@@ -157,3 +184,15 @@ class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
                 return render(request, "partials/password-button.html", {"status": "invalid"})
             else:
                 messages.error(self.request, "The Password entered is invalid.")
+
+class AccountDeleteView(LoginRequiredMixin, DeleteView):
+    model = User
+   
+    success_url = reverse_lazy('account_deleted')
+    
+    def get_object(self, queryset=None):
+        return self.request.user
+    
+
+class AccountDeletedView(TemplateView):
+    template_name = "account/account_confirm_delete.html"
