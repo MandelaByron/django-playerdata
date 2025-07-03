@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 
 
     "users.apps.UsersConfig",
+    "players.apps.PlayersConfig",
     "theme.apps.ThemeConfig"
 ]
 

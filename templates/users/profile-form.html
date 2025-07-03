@@ -93,7 +93,7 @@
                                         id="{{ form.username.id_for_label }}"
                                         class="w-full rounded-xl border border-white/10 bg-[#313131] text-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-fuchsia-700 py-3 pl-[96px]"
                                         hx-get="{% url 'search-username' %}"
-                                        hx-trigger="keyup changed delay:500ms"
+                                        hx-trigger="custom-hx-trigger"
                                         hx-target="#username_feedback"
                                         hx-indicator="#username_load"
                                         required
@@ -192,7 +192,22 @@
         }
     });
 </script>
-    
+<script>
+    const input = document.getElementById('{{ form.username.id_for_label }}');
+    let debounceTimer;
+  
+    input.addEventListener('input', function () {
+      const value = this.value.trim();
+      clearTimeout(debounceTimer);
+  
+      if (!value) return;
+  
+      debounceTimer = setTimeout(() => {
+        this.dispatchEvent(new Event('custom-hx-trigger', { bubbles: true }));
+      }, 800);
+    });
+</script>
+  
     
 
 <!-- profile-form.html -->

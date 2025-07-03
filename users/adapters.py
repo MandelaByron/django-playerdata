@@ -25,5 +25,5 @@ class AccountAdapter(DefaultAccountAdapter):
     
     def get_login_redirect_url(self, request):
         user = request.user
-        return reverse("profile", kwargs={"slug_user": user.slug_user})
+        return reverse("profile", kwargs={"username": user.username})
         

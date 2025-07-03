@@ -6,6 +6,7 @@ __pycache__/
 media
 dump
 static
+player_data.json
 
 # Tailwind (via django-tailwind)
 theme/node_modules/

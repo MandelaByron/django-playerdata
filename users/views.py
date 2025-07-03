@@ -13,11 +13,14 @@ from django.contrib.auth.decorators import login_required
 
 def search_username(request):
     query = request.GET.get("username", "")
-    user = User.objects.filter(username=query).first()
-    time.sleep(1)
-    return render(request, 'partials/search-feedback.html', {
-        "user_found": bool(user)
-    })
+    if query:
+        user = User.objects.filter(username=query).first()
+        time.sleep(1)
+        return render(request, 'partials/search-feedback.html', {
+            "user_found": bool(user)
+        })
+    else:
+        return render(request, 'partials/empty-search.html')
 
 @login_required
 def cancel_email_change(request):
