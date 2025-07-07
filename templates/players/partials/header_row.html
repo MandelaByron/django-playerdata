@@ -1,0 +1,33 @@
+<!-- Header Row Itemns -->
+<div class="flex gap-8 justify-end items-center">
+    <div class="flex items-center w-[96px]">
+        <span class="text-base font-normal">Matches</span>
+    </div>
+    {% if player.main_position != "Goalkeeper" %}
+        <div class="flex  items-center w-[80px] ">
+            <span class="text-base font-normal">Goals</span>
+        </div>
+        <div class="flex  items-center w-[80px]">
+            <span class="text-base font-normal">Assists</span>
+        </div>
+    {% else %}
+        <div class="flex  items-center w-[80px] ">
+            <span class="text-base font-normal">Cleansheets</span>
+        </div>      
+        <div class="flex  items-center w-[80px] ">
+            <span class="text-base font-normal">Conceded</span>
+        </div>  
+    {% endif %}
+    
+    
+
+    <div class="flex  items-center w-[80px]">
+        <span class="text-base font-normal">Min.Played</span>
+    </div>
+    <div class="flex items-center w-[48px]">
+        <span class="text-base font-normal">Yellow</span>
+    </div>
+    <div class="flex items-center w-[48px]">
+        <span class="text-base font-normal">Red</span>
+    </div>
+</div>

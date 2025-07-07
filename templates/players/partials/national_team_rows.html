@@ -1,0 +1,49 @@
+{% load custom_filters %}
+
+{% for team in player.national_team_stats.national_teams %}
+    <div class="flex justify-between items-center w-full">
+        <div class="flex gap-4 items-center">
+            <img src="{{ player.national_team_stats.teams_flag|index:forloop.counter0 }}" alt="" class="h-12 w-12">
+            <div class="flex flex-col gap-1 justify-center items-start">
+                <span class="font-medium text-base">{{team}}</span>
+            </div>
+        </div>
+
+        <!-- national team stats row items -->
+        <div class="flex gap-8 justify-end items-center">
+            <!-- debut date -->
+            <div class="flex items-center w-[94px]">
+                <div class="flex items-center gap-2">
+                    <span class="text-base font-normal whitespace-nowrap">{{ player.national_team_stats.debut|index:forloop.counter0|default:"-" }}</span>
+                </div>
+            </div>
+            <!-- appearances -->
+            <div class="flex items-center w-[80px]">
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <rect x="2" y="2" width="20" height="20" rx="3" fill="#56B694"/>
+                        <rect x="2" y="2" width="20" height="20" rx="3" fill="#56B694"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.09756 2H5C3.34315 2 2 3.34315 2 5V19C2 20.6569 3.34314 22 5 22H8.09756H15.9024H19C20.6569 22 22 20.6569 22 19V5C22 3.34315 20.6569 2 19 2H15.9024H8.09756ZM15.8079 20.9024H18.9024C20.007 20.9024 20.9024 20.007 20.9024 18.9024V12.2439L14.5443 12.2439C14.1877 13.3071 13.1833 14.0732 12 14.0732C10.8167 14.0732 9.81232 13.3071 9.45574 12.2439H3.09756V18.9024C3.09756 20.007 3.99299 20.9024 5.09756 20.9024H8.19207C8.24098 20.6843 8.30865 20.4702 8.39462 20.2627C8.59073 19.7892 8.87818 19.359 9.24056 18.9967C9.60293 18.6343 10.0331 18.3468 10.5066 18.1507C10.9801 17.9546 11.4875 17.8537 12 17.8537C12.5125 17.8537 13.0199 17.9546 13.4934 18.1507C13.9669 18.3468 14.3971 18.6343 14.7594 18.9967C15.1218 19.359 15.4093 19.7892 15.6054 20.2627C15.6913 20.4702 15.759 20.6843 15.8079 20.9024ZM3.09756 11.1463V5.09756C3.09756 3.99299 3.99299 3.09756 5.09756 3.09756H8.19207C8.24098 3.31571 8.30865 3.52977 8.39462 3.7373C8.59073 4.21077 8.87818 4.64097 9.24056 5.00334C9.60293 5.36572 10.0331 5.65317 10.5066 5.84929C10.9801 6.0454 11.4875 6.14634 12 6.14634C12.5125 6.14634 13.0199 6.0454 13.4934 5.84929C13.9669 5.65317 14.3971 5.36572 14.7594 5.00334C15.1218 4.64097 15.4093 4.21077 15.6054 3.7373C15.6913 3.52977 15.759 3.31571 15.8079 3.09756H18.9024C20.007 3.09756 20.9024 3.99299 20.9024 5.09756V11.1463L14.672 11.1463C14.5488 9.7789 13.3995 8.70732 12 8.70732C10.6005 8.70732 9.45124 9.7789 9.32801 11.1463H3.09756ZM10.4146 11.3902C10.4146 12.2658 11.1244 12.9756 12 12.9756C12.8756 12.9756 13.5854 12.2658 13.5854 11.3902C13.5854 10.5147 12.8756 9.80488 12 9.80488C11.1244 9.80488 10.4146 10.5147 10.4146 11.3902ZM14.6718 20.9024C14.6481 20.8282 14.6213 20.7549 14.5914 20.6827C14.4504 20.3424 14.2438 20.0332 13.9833 19.7727C13.7229 19.5123 13.4137 19.3057 13.0734 19.1647C12.7331 19.0238 12.3683 18.9512 12 18.9512C11.6317 18.9512 11.2669 19.0238 10.9266 19.1647C10.5863 19.3057 10.2771 19.5123 10.0167 19.7727C9.7562 20.0332 9.54959 20.3424 9.40863 20.6827C9.37872 20.7549 9.35189 20.8282 9.32818 20.9024H14.6718ZM9.32818 3.09756C9.35189 3.17177 9.37872 3.24508 9.40863 3.31728C9.54959 3.65759 9.75619 3.96679 10.0167 4.22725C10.2771 4.48771 10.5863 4.69431 10.9266 4.83527C11.2669 4.97623 11.6317 5.04878 12 5.04878C12.3683 5.04878 12.7331 4.97623 13.0734 4.83527C13.4137 4.69431 13.7229 4.48771 13.9833 4.22725C14.2438 3.96679 14.4504 3.65759 14.5914 3.31728C14.6213 3.24508 14.6481 3.17177 14.6718 3.09756L9.32818 3.09756Z" fill="#313131"/>
+                    </svg>
+                    <span class="text-base font-normal">{{ player.national_team_stats.appearances|index:forloop.counter0|default:"-" }}</span>
+                </div>
+            </div>
+            <!-- goals -->
+            <div class="flex  items-center w-[80px]">
+                <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <path d="M11 7L14.804 9.764L11 7ZM11 7L7.196 9.764L11 7ZM11 7V4V7ZM14.804 9.764L13.351 14.236L14.804 9.764ZM14.804 9.764L17.5 8.5L14.804 9.764ZM13.351 14.236H8.65H13.351ZM13.352 14.236L15 16.5L13.352 14.236ZM8.649 14.236L7.196 9.764L8.649 14.236ZM8.649 14.236L7 16.5L8.649 14.236ZM7.196 9.764L4.5 8.5L7.196 9.764ZM4.5 8.5L1.05 12L4.5 8.5ZM4.5 8.5L3.5 4.385L4.5 8.5ZM17.5 8.5L20.95 12L17.5 8.5ZM17.5 8.5L18.5 4.385L17.5 8.5ZM11 4L7.624 1.584L11 4ZM11 4L14.376 1.584L11 4ZM7 16.5L2.338 16L7 16.5ZM7 16.5L9.5 20.888L7 16.5ZM15 16.5L19.662 16L15 16.5ZM15 16.5L12.5 20.888L15 16.5ZM21 11C21 16.523 16.523 21 11 21C5.477 21 1 16.523 1 11C1 5.477 5.477 1 11 1C16.523 1 21 5.477 21 11Z" stroke="#56B694" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="text-base font-normal">{{ player.national_team_stats.goals|index:forloop.counter0|default:"-" }}</span>
+                </div>
+            </div>
+            <!-- Age at debut -->
+            <div class="flex  items-center w-[200px]">
+                <div class="flex items-center gap-2">
+                    <span class="text-base font-normal whitespace-nowrap">{{ player.national_team_stats.age_at_debut|index:forloop.counter0|default:"-" }}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endfor %}

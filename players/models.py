@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 class Player(models.Model):
 
     id = models.IntegerField(primary_key=True)
@@ -69,3 +69,49 @@ class Player(models.Model):
         
     def __str__(self) -> str:
         return f"{self.name} - {self.id}"
+    
+    def get_absolute_url(self):
+        return reverse("player-detail", kwargs={"id": self.id})
+    
+    @property
+    def club_logo_head(self):
+        return self.club_logo.replace('small', 'head')
+    
+    @property
+    def formatted_market_value(self):
+        value = self.market_value
+        if value >= 1_000_000_000:
+            return f"€{value // 1_000_000_000}b"
+        elif value >= 1_000_000:
+            return f"€{value // 1_000_000}m"
+        elif value >= 1_000:
+            return f"€{value // 1_000}k"
+        else:
+            return f"€{value}"
+        
+        #June 27, 2023
+
+    @property
+    def first_national_team_debut(self):
+        debut_list = self.national_team_stats.get("debut") if self.national_team_stats else []
+        return debut_list[0] if debut_list else None
+    
+    @property
+    def second_nationality(self):
+        """Returns a tuple: (flag_url, country_name) or None"""
+        if not self.citizenship or not self.citizenship_flag:
+            return None
+
+        # Ensure both are lists
+        countries = self.citizenship if isinstance(self.citizenship, list) else [self.citizenship]
+        flags = self.citizenship_flag if isinstance(self.citizenship_flag, list) else [self.citizenship_flag]
+
+        # Return 2nd if available
+        if len(countries) > 1 and len(flags) > 1:
+            return (flags[1], countries[1])
+        return None
+    
+
+    
+
+

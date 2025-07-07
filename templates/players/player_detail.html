@@ -1,0 +1,535 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <!-- Player Card Container -->
+    <div class="hidden lg:card w-full xl:w-[100%] shadow-sm bg-zinc-900  rounded-none relative">
+        
+        <div class="card-body">
+          <!-- Flex container: Align avatar and content side-by-side -->
+          <div class="flex items-center space-x-8">  
+            <!-- Inner flex container: controls spacing between avatar and text info -->
+            <div class="flex justify-between gap-6">
+  
+              <!-- Avatar Section -->
+              <div class="avatar">
+                <div class="rounded w-20 ">
+                  <!-- Player's profile picture -->
+                  <img src="{{ player.headshot }}" alt="Player profile" />
+                </div>
+              </div>
+  
+              <!-- Content Section: Player info and stats -->
+              <div class="flex flex-col gap-4">
+  
+                <!-- Header Row: Name, verification, and age -->
+                <div class="flex items-center gap-3">
+                  <!-- Player Name and Verified Icon -->
+                  <div class="flex items-center gap-1">
+                    <h2 class="text-2xl font-semibold">{{player.name}}</h2>
+                    <div>
+                      <!-- Verified Star Icon -->
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M6.79166 18.125L5.58332 16.0834L3.29166 15.5834C3.08332 15.5417 2.91666 15.4339 2.79166 15.26C2.66666 15.0861 2.61805 14.8953 2.64582 14.6875L2.87499 12.3334L1.31249 10.5417C1.1736 10.3889 1.10416 10.2084 1.10416 10C1.10416 9.7917 1.1736 9.61114 1.31249 9.45837L2.87499 7.6667L2.64582 5.31253C2.61805 5.1042 2.66666 4.91309 2.79166 4.7392C2.91666 4.56531 3.08332 4.45781 3.29166 4.4167L5.58332 3.9167L6.79166 1.87503C6.90277 1.69448 7.05554 1.57281 7.24999 1.51003C7.44443 1.44725 7.63888 1.45781 7.83332 1.5417L9.99999 2.45837L12.1667 1.5417C12.3611 1.45837 12.5555 1.44781 12.75 1.51003C12.9444 1.57225 13.0972 1.69392 13.2083 1.87503L14.4167 3.9167L16.7083 4.4167C16.9167 4.45837 17.0833 4.56614 17.2083 4.74003C17.3333 4.91392 17.3819 5.10475 17.3542 5.31253L17.125 7.6667L18.6875 9.45837C18.8264 9.61114 18.8958 9.7917 18.8958 10C18.8958 10.2084 18.8264 10.3889 18.6875 10.5417L17.125 12.3334L17.3542 14.6875C17.3819 14.8959 17.3333 15.087 17.2083 15.2609C17.0833 15.4348 16.9167 15.5423 16.7083 15.5834L14.4167 16.0834L13.2083 18.125C13.0972 18.3056 12.9444 18.4273 12.75 18.49C12.5555 18.5528 12.3611 18.5423 12.1667 18.4584L9.99999 17.5417L7.83332 18.4584C7.63888 18.5417 7.44443 18.5523 7.24999 18.49C7.05554 18.4278 6.90277 18.3061 6.79166 18.125ZM9.12499 10.5834L7.91666 9.39586C7.76388 9.24309 7.57277 9.1667 7.34332 9.1667C7.11388 9.1667 6.9161 9.25003 6.74999 9.4167C6.59721 9.56948 6.52082 9.76392 6.52082 10C6.52082 10.2361 6.59721 10.4306 6.74999 10.5834L8.54166 12.375C8.70832 12.5417 8.90277 12.625 9.12499 12.625C9.34721 12.625 9.54166 12.5417 9.70832 12.375L13.25 8.83337C13.4167 8.6667 13.4964 8.47225 13.4892 8.25003C13.4819 8.02781 13.4022 7.83336 13.25 7.6667C13.0833 7.50003 12.8853 7.41336 12.6558 7.4067C12.4264 7.40003 12.2286 7.47975 12.0625 7.64587L9.12499 10.5834Z" fill="#811FD4"/>
+                      </svg>
+                    </div>
+                  </div>  
+                  <!-- Jersey Section with icon -->
+                  <div class="flex items-center gap-1">
+                    <!-- (shirt badge) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path d="M10.4854 0C12.0179 0.139909 13.3439 0.415969 14.0596 0.828125C14.4601 1.05884 15.9803 4.10402 16 4.14355C15.2541 5.94889 13.5346 6.0622 13.1885 6.08496C13.1503 6.08747 13.1293 6.08931 13.1279 6.0918L12.3213 4.80176L12.6992 14.7871C10.7591 15.9224 9.37329 16 8.0127 16H8V16.001C6.64326 16.0005 5.23493 15.9202 3.30078 14.7627L3.67871 4.77734L2.87207 6.06738C2.84067 6.06827 0.85 6.11629 0 4.14551C0 4.14551 1.56267 1.06132 1.96582 0.829102C2.67755 0.419335 3.9926 0.144541 5.51465 0.00390625C5.65141 0.507877 6.71211 0.900391 8 0.900391V0.898438C9.29012 0.898438 10.3516 0.505227 10.4854 0Z" fill="#4D5F7A"/>
+                    </svg>
+                    <!-- Jersey -->
+                    <span class="text-base font-medium">{{ player.jersey_number }}</span>
+                  </div>  
+                </div>
+  
+                <!-- Secondary Info Row: Club, League, Market Value, Contract -->
+                <div class="flex gap-10 items-center">
+  
+                  <!-- Club Info -->
+                  <div class="flex items-center gap-2.5">
+                    <!-- Club Logo -->
+                    <div class="avatar w-[46px]">
+                      <img src="{{ player.club_logo_head}}" class="" alt="{{ player.club }}">
+                    </div>
+                    <!-- Club Name and Position -->
+                    <div class="flex flex-col items-start gap-1">
+                      <span class="text-base font-semibold">{{player.club }}</span>
+                      <span class="text-xs font-normal opacity-[0.7]">{{player.main_position }}</span>
+                    </div>
+                  </div>
+  
+                  <!-- League Info -->
+                  <div class="flex items-center gap-2.5">
+                    <!-- League Logo -->
+                    <div class="avatar w-10">
+                      <img src="{{ player.league_logo }}" alt="{{player.league_name}}">
+                    </div>
+                    <!-- League Name and Tier -->
+                    <div class="flex flex-col items-start gap-1">
+                      <span class="text-base font-semibold">{{player.league_name}}</span>
+                      <span class="text-xs font-normal opacity-[0.7]">{{player.league_level}}</span>
+                    </div>
+                  </div>
+  
+                  <!-- Market Value -->
+                  <div class="flex items-center gap-2.5">
+                    <div class="flex flex-col items-start gap-1">
+                      <span class="text-base font-semibold">{{player.formatted_market_value}}</span>
+                      <span class="text-xs font-normal opacity-[0.7]">Market Value</span>
+                    </div>
+                  </div>
+  
+                  <!-- Contract Expiry -->
+                  <div class="flex items-center gap-2.5">
+                    <div class="flex flex-col items-start gap-1">
+                      <span class="text-base font-semibold">{{player.contract_expires}}</span>
+                      <span class="text-xs font-normal opacity-[0.7]">Contract Expires</span>
+                    </div>
+                  </div>
+                </div>
+  
+              </div>
+  
+            </div>
+          </div>   
+        </div>
+        
+        <div class="flex items-center gap-4 absolute right-6 top-10">
+          <button onclick="share_modal.showModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M18 22C19.6569 22 21 20.6569 21 19C21 17.3431 19.6569 16 18 16C16.3431 16 15 17.3431 15 19C15 20.6569 16.3431 22 18 22Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 15C7.65685 15 9 13.6569 9 12C9 10.3431 7.65685 9 6 9C4.34315 9 3 10.3431 3 12C3 13.6569 4.34315 15 6 15Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8.58997 13.5098L15.42 17.4898" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M18 8C19.6569 8 21 6.65685 21 5C21 3.34315 19.6569 2 18 2C16.3431 2 15 3.34315 15 5C15 6.65685 16.3431 8 18 8Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M15.41 6.50977L8.58997 10.4898" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button onclick="add_to_collection_2_modal.showModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M20.84 4.60987C20.3292 4.09888 19.7228 3.69352 19.0554 3.41696C18.3879 3.14039 17.6725 2.99805 16.95 2.99805C16.2275 2.99805 15.5121 3.14039 14.8446 3.41696C14.1772 3.69352 13.5708 4.09888 13.06 4.60987L12 5.66987L10.94 4.60987C9.9083 3.57818 8.50903 2.99858 7.05 2.99858C5.59096 2.99858 4.19169 3.57818 3.16 4.60987C2.1283 5.64156 1.54871 7.04084 1.54871 8.49987C1.54871 9.95891 2.1283 11.3582 3.16 12.3899L4.22 13.4499L12 21.2299L19.78 13.4499L20.84 12.3899C21.351 11.8791 21.7563 11.2727 22.0329 10.6052C22.3095 9.93777 22.4518 9.22236 22.4518 8.49987C22.4518 7.77738 22.3095 7.06198 22.0329 6.39452C21.7563 5.72706 21.351 5.12063 20.84 4.60987V4.60987Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+    </div>
+  
+      
+    <!-- Visible on small to medium screens only; hides on large (≥1024px).Uses responsive width -->
+    <div class="lg:hidden w-[100%] max-md:w-full card shadow-sm bg-[#313131] rounded-none relative">
+        <div class="card-body p-0 w-full">
+            <div class="flex flex-col items-start p-4 gap-4 ">
+                <div class="flex items-center gap-3 ">
+                    <div class="avatar">
+                        <div class="w-18 rounded">
+                            <!-- Player's profile picture -->
+                            <img src="{{player.headshot}}" alt="{{player.name}}">
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <!-- name and tick -->
+                        <div class="flex items-center gap-1">
+                            <span class="font-semibold text-base">{{ player.name }}</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M6.7915 18.125L5.58317 16.0833L3.2915 15.5833C3.08317 15.5417 2.9165 15.4339 2.7915 15.26C2.6665 15.0861 2.61789 14.8953 2.64567 14.6875L2.87484 12.3333L1.31234 10.5417C1.17345 10.3889 1.104 10.2083 1.104 10C1.104 9.79167 1.17345 9.61111 1.31234 9.45833L2.87484 7.66667L2.64567 5.3125C2.61789 5.10417 2.6665 4.91306 2.7915 4.73917C2.9165 4.56528 3.08317 4.45778 3.2915 4.41667L5.58317 3.91667L6.7915 1.875C6.90261 1.69445 7.05539 1.57278 7.24984 1.51C7.44428 1.44722 7.63873 1.45778 7.83317 1.54167L9.99984 2.45834L12.1665 1.54167C12.3609 1.45834 12.5554 1.44778 12.7498 1.51C12.9443 1.57222 13.0971 1.69389 13.2082 1.875L14.4165 3.91667L16.7082 4.41667C16.9165 4.45834 17.0832 4.56611 17.2082 4.74C17.3332 4.91389 17.3818 5.10472 17.354 5.3125L17.1248 7.66667L18.6873 9.45833C18.8262 9.61111 18.8957 9.79167 18.8957 10C18.8957 10.2083 18.8262 10.3889 18.6873 10.5417L17.1248 12.3333L17.354 14.6875C17.3818 14.8958 17.3332 15.0869 17.2082 15.2608C17.0832 15.4347 16.9165 15.5422 16.7082 15.5833L14.4165 16.0833L13.2082 18.125C13.0971 18.3056 12.9443 18.4272 12.7498 18.49C12.5554 18.5528 12.3609 18.5422 12.1665 18.4583L9.99984 17.5417L7.83317 18.4583C7.63873 18.5417 7.44428 18.5522 7.24984 18.49C7.05539 18.4278 6.90261 18.3061 6.7915 18.125ZM9.12484 10.5833L7.9165 9.39583C7.76373 9.24306 7.57261 9.16667 7.34317 9.16667C7.11373 9.16667 6.91595 9.25 6.74984 9.41667C6.59706 9.56945 6.52067 9.76389 6.52067 10C6.52067 10.2361 6.59706 10.4306 6.74984 10.5833L8.5415 12.375C8.70817 12.5417 8.90261 12.625 9.12484 12.625C9.34706 12.625 9.5415 12.5417 9.70817 12.375L13.2498 8.83334C13.4165 8.66667 13.4962 8.47222 13.489 8.25C13.4818 8.02778 13.4021 7.83333 13.2498 7.66667C13.0832 7.5 12.8851 7.41333 12.6557 7.40667C12.4262 7.4 12.2284 7.47972 12.0623 7.64583L9.12484 10.5833Z" fill="#267FE1"/>
+                            </svg>
+                        </div>
+                        <!-- jersey and foot -->
+                        <div class="flex gap-3 items-center">
+                            <div class="flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+                                    <path d="M10.4854 0.5C12.0179 0.639909 13.3439 0.915969 14.0596 1.32812C14.4601 1.55884 15.9803 4.60402 16 4.64355C15.2541 6.44889 13.5346 6.5622 13.1885 6.58496C13.1503 6.58747 13.1293 6.58932 13.1279 6.5918L12.3213 5.30176L12.6992 15.2871C10.7591 16.4224 9.37329 16.5 8.0127 16.5H8V16.501C6.64326 16.5005 5.23493 16.4202 3.30078 15.2627L3.67871 5.27734L2.87207 6.56738C2.84067 6.56827 0.85 6.61629 0 4.64551C0 4.64551 1.56267 1.56132 1.96582 1.3291C2.67755 0.919335 3.9926 0.644541 5.51465 0.503906C5.65141 1.00788 6.71211 1.40039 8 1.40039V1.39844C9.29012 1.39844 10.3516 1.00523 10.4854 0.5Z" fill="#4D5F7A"/>
+                                </svg>
+                                <span class="text-base font-medium">{{player.jersey_number}}</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="30" viewBox="0 0 16 17" fill="none">
+                                    <path d="M5.1875 12.5302C5.44659 12.5302 5.65625 12.3206 5.65625 12.0615V11.124C5.65625 10.8649 5.44659 10.6552 5.1875 10.6552C4.92841 10.6552 4.71875 10.8649 4.71875 11.124V12.0615C4.71875 12.3206 4.92841 12.5302 5.1875 12.5302Z" fill="#4D5F7A"/>
+                                    <path d="M2.375 12.5302C2.63409 12.5302 2.84375 12.3206 2.84375 12.0615V11.124C2.84375 10.8649 2.63409 10.6552 2.375 10.6552C2.11591 10.6552 1.90625 10.8649 1.90625 11.124V12.0615C1.90625 12.3206 2.11591 12.5302 2.375 12.5302Z" fill="#4D5F7A"/>
+                                    <path d="M13.625 12.5302C13.8841 12.5302 14.0938 12.3206 14.0938 12.0615V11.124C14.0938 10.8649 13.8841 10.6552 13.625 10.6552C13.3659 10.6552 13.1562 10.8649 13.1562 11.124V12.0615C13.1562 12.3206 13.3659 12.5302 13.625 12.5302Z" fill="#4D5F7A"/>
+                                    <path d="M10.8125 12.5302C11.0716 12.5302 11.2812 12.3206 11.2812 12.0615V11.124C11.2812 10.8649 11.0716 10.6552 10.8125 10.6552C10.5534 10.6552 10.3438 10.8649 10.3438 11.124V12.0615C10.3438 12.3206 10.5534 12.5302 10.8125 12.5302Z" fill="#4D5F7A"/>
+                                    <path d="M8 10.6552C7.74091 10.6552 7.53125 10.8649 7.53125 11.124V12.0615C7.53125 12.3206 7.74091 12.5302 8 12.5302C8.25909 12.5302 8.46875 12.3206 8.46875 12.0615V11.124C8.46875 10.8649 8.25909 10.6552 8 10.6552Z" fill="#4D5F7A"/>
+                                    <path d="M14.5343 8.78021L8 9.59596L7.175 9.69896L4.25 11.5927H8H14.5625C14.6844 11.5927 14.8062 11.5458 14.8906 11.4521C15.4625 10.8802 15.7656 10.2427 15.8875 9.71771L14.5343 8.78021Z" fill="#4D5F7A"/>
+                                    <path d="M15.3125 6.05214C15.2375 5.92089 15.0969 5.82708 14.9375 5.81776C14.7781 5.79898 14.6281 5.86464 14.525 5.99589C14.075 6.57714 13.4094 6.90523 12.6875 6.90523C11.7031 6.90523 10.8219 6.24589 10.4844 5.30839C10.4469 5.19589 10.3532 5.09273 10.2407 5.04586C10.1282 4.98961 9.99691 4.98961 9.87503 5.02714L8.00003 5.78073L7.55062 5.95389L7.71669 6.78254L6.59363 6.32261L5.6365 6.69133L5.80231 7.51998L4.67947 7.05998L3.7225 7.42876L3.88794 8.25704L2.76547 7.79742L0.96875 8.48961C0.378125 8.78961 0 9.3427 0 9.96148C0 10.8615 0.762531 11.5927 1.6625 11.5927H4.25C5.66053 11.5927 6.86725 11.3946 8 11.1378C8.68166 10.9833 9.34297 10.8126 9.9875 10.6365C11.7125 10.1677 13.375 9.71773 15.5031 9.71773H15.8875C15.9906 9.30523 16 8.96773 16 8.78023V8.62089C16 7.73023 15.7438 6.83961 15.3125 6.05214Z" fill="url(#paint0_linear_147_11405)"/>
+                                    <path opacity="0.2" d="M8.5 5.59915V5.57422L1.5 8.28516L2.24358 8.63952C2.72748 8.87013 3.28371 8.89683 3.78748 8.71364L7.18349 7.47873C7.97386 7.19132 8.5 6.44016 8.5 5.59915Z" fill="white"/>
+                                    <path d="M15.5031 9.71773H15.8875C15.9906 9.30523 16 8.96773 16 8.78023V8.62089C16 7.73026 15.7437 6.83961 15.3125 6.05214C15.2374 5.92089 15.0969 5.82708 14.9375 5.81776C14.7781 5.79898 14.6281 5.86464 14.525 5.99589C14.075 6.57714 13.4094 6.90523 12.6875 6.90523C11.7031 6.90523 10.8218 6.24589 10.4844 5.30839C10.4468 5.19589 10.3531 5.09273 10.2406 5.04586C10.1281 4.98961 9.99688 4.98961 9.875 5.02714L8 5.78073V11.1378C8.68166 10.9833 9.34297 10.8126 9.9875 10.6365C11.7125 10.1677 13.375 9.71773 15.5031 9.71773Z" fill="url(#paint1_linear_147_11405)"/>
+                                    <path d="M7.20878 8.92625C7.02569 9.10935 6.72903 9.10935 6.54594 8.92625L4.67969 7.06L5.63669 6.69135L7.20875 8.26341C7.39187 8.44653 7.39187 8.74316 7.20878 8.92625Z" fill="white"/>
+                                    <path d="M5.29431 9.66324C5.11122 9.84634 4.81456 9.84634 4.63147 9.66324L2.76562 7.7974L3.72263 7.42874L5.29431 9.00043C5.47741 9.18349 5.47741 9.48015 5.29431 9.66324Z" fill="white"/>
+                                    <path d="M9.12306 7.52592L8.00016 6.4032L7.55075 5.95386L6.59375 6.32258L8.00016 7.72879L8.46022 8.18879C8.64331 8.37189 8.93997 8.37189 9.12306 8.18879C9.30616 8.0057 9.30616 7.70904 9.12306 7.52592Z" fill="white"/>
+                                    <path opacity="0.1" d="M9.12291 8.18882C9.306 8.00573 9.306 7.70907 9.12291 7.52598L8 6.40326V7.72882L8.46006 8.18882C8.64316 8.37195 8.93978 8.37195 9.12291 8.18882Z" fill="#214070"/>
+                                    <defs>
+                                    <linearGradient id="paint0_linear_147_11405" x1="0" y1="5.00098" x2="16.6422" y2="8.7147" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#26BFE1"/>
+                                        <stop offset="1" stop-color="#2687E1"/>
+                                    </linearGradient>
+                                    <linearGradient id="paint1_linear_147_11405" x1="10.5" y1="9" x2="13.3528" y2="11.658" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#5A98C5" stop-opacity="0"/>
+                                        <stop offset="1" stop-color="#2F6287"/>
+                                    </linearGradient>
+                                    </defs>
+                                </svg>
+                                <span class="text-base font-medium">{{player.foot}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-start self-stretch">
+                    <!-- club info and position -->
+                    <div class="flex items-start gap-2 flex-[1_0_0]">
+                    <!-- Club Logo -->
+                    <div class="avatar w-[46px] h-[46px]">
+                        <img src="{{ player.club_logo_head}}" class="" alt="{{ player.club }}">
+                    </div>
+                    <!-- club and position -->
+                    <div class="flex flex-col gap-1 items-start">
+                        <div class="flex items-center gap-2">
+                            <span class="font-semibold text-sm">{{player.club}}</span>
+                        </div>
+                        <span class="font-normal text-xs text-white/70">{{player.main_position}}</span>
+                    </div>
+                    </div>
+                    <!-- League Info -->
+                    <div class="flex items-start gap-2 flex-[1_0_0]">
+                    <!-- League Logo -->
+                    <div class="avatar w-10">
+                        <img src="{{ player.league_logo }}" alt="{{player.league_name}}">
+                      </div>
+                    <!-- League and league level -->
+                    <div class="flex flex-col gap-1 items-start">
+                        <div class="flex items-center gap-2">
+                        <span class="font-semibold text-sm">{{player.league_name}}</span>
+                        </div>
+                        <span class="font-normal text-xs text-white/70">{{player.league_level}}</span>
+
+                    </div>
+                    </div>
+                </div>
+
+                <div class="divider mt-0 mb-0"></div>
+
+                <div class="flex items-start self-stretch">
+                    <!-- Market value -->
+                    <div class="flex flex-col gap-2 flex-[1_0_0]">
+                        <span class="text-base font-semibold">{{player.formatted_market_value}}</span>
+                        <span class="text-xs font-normal text-white/70">Market Value</span>
+                    </div>
+                    <div class="flex flex-col gap-2 flex-[1_0_0]">
+                        <span class="text-base font-semibold">{{player.contract_expires}}</span>
+                        <span class="text-xs font-normal text-white/70">Contract Expires</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-4 absolute right-1 top-6">
+            <button onclick="share_modal.showModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M18 22C19.6569 22 21 20.6569 21 19C21 17.3431 19.6569 16 18 16C16.3431 16 15 17.3431 15 19C15 20.6569 16.3431 22 18 22Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 15C7.65685 15 9 13.6569 9 12C9 10.3431 7.65685 9 6 9C4.34315 9 3 10.3431 3 12C3 13.6569 4.34315 15 6 15Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8.58997 13.5098L15.42 17.4898" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18 8C19.6569 8 21 6.65685 21 5C21 3.34315 19.6569 2 18 2C16.3431 2 15 3.34315 15 5C15 6.65685 16.3431 8 18 8Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15.41 6.50977L8.58997 10.4898" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            </button>
+            <button onclick="add_to_collection_2_modal.showModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M20.84 4.60987C20.3292 4.09888 19.7228 3.69352 19.0554 3.41696C18.3879 3.14039 17.6725 2.99805 16.95 2.99805C16.2275 2.99805 15.5121 3.14039 14.8446 3.41696C14.1772 3.69352 13.5708 4.09888 13.06 4.60987L12 5.66987L10.94 4.60987C9.9083 3.57818 8.50903 2.99858 7.05 2.99858C5.59096 2.99858 4.19169 3.57818 3.16 4.60987C2.1283 5.64156 1.54871 7.04084 1.54871 8.49987C1.54871 9.95891 2.1283 11.3582 3.16 12.3899L4.22 13.4499L12 21.2299L19.78 13.4499L20.84 12.3899C21.351 11.8791 21.7563 11.2727 22.0329 10.6052C22.3095 9.93777 22.4518 9.22236 22.4518 8.49987C22.4518 7.77738 22.3095 7.06198 22.0329 6.39452C21.7563 5.72706 21.351 5.12063 20.84 4.60987V4.60987Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            </button>
+        </div>
+    </div>
+  
+    <!-- Player Profile info: Visible on large screens and above (≥1024px); hidden on smaller devices.
+    Full width by default, slightly reduced on extra-large screens
+    -->
+    <div class="hidden lg:card w-full xl:w-[100%] shadow-sm bg-[#313131] rounded-none">     
+        <div class="card-body w-full">        
+            <div class="inline-flex flex-col items-start gap-4">                                  
+                <div class="flex items-center self-stretch gap-1">                    
+                    <span class="text-2xl font-medium">Player Info</span>
+                </div> 
+
+                <div class="w-full flex items-center justify-between">                                
+                    <!-- birth -->
+                    <div class="flex flex-col items-start gap-2">
+                        <span class="text-xs font-normal opacity-[0.7]">Birth</span>                
+                        <span class="text-base font-medium ">{{player.date_of_birth}}</span>           
+                    </div>
+                    
+                    <!-- age -->
+                    <div class="flex flex-col items-start gap-2">
+                        <span class="text-xs font-normal opacity-[0.7]">Age</span>
+                        <span class="text-base font-medium ">{{ player.age }}</span>
+                    </div>
+                    
+                    
+                    <!-- height -->
+                    <div class="flex flex-col  items-start gap-2">
+                        <span class="text-xs font-normal opacity-[0.7]">Height</span>
+                        <span class="text-base font-medium ">{{ player.age }}</span>                 
+                    </div>
+
+                    <!-- pob-->
+                    <div class="flex flex-col items-start gap-2">
+                        <span class="text-xs font-normal opacity-[0.7]">Place of Birth</span>
+                        <div class="flex gap-1">
+                            <img src="{{player.place_of_birth_flag}}" class="w-6 h-6" alt="">
+                            <span class="text-base font-medium ">{{player.place_of_birth}}</span>
+                        </div>
+                    
+                    </div>
+
+                    <!-- positions -->
+                    <div class="flex flex-col  items-start gap-2">
+                        <span class="text-xs font-normal opacity-[0.7]">Position</span>
+                        <div class="flex items-start">
+                            <span class="text-base font-medium ">{{ player.other_positions|join:", " }}</span>               
+                        </div>
+                    </div>          
+
+                </div>
+
+            </div> 
+
+            <div class="divider"></div>
+            <!-- Nationality -->
+            <div class="inline-flex flex-col items-start gap-4">                                  
+                <div class="flex items-center self-stretch gap-1">                    
+                    <span class="text-2xl font-medium">Nationality</span>
+                </div>             
+                <div class="w-full flex items-center justify-between">                                
+                    <!-- national team -->
+                    <div class="flex flex-col flex-[1_0_0] items-start gap-2">
+                        <span class="text-xs font-normal opacity-[0.7]">National Team</span>
+                        <div class="flex items-center gap-1.5">
+                            <img src="{{player.national_team_flag }}" class="h-6 w-6" alt="">
+                            <span class="text-base font-medium ">{{player.national_team }}</span>
+                        </div>
+                    </div> 
+                    
+                    <!-- debut -->
+                    <div class="flex flex-col flex-[1_0_0] items-start gap-2">
+                        <span class="text-xs font-normal opacity-[0.7]">Debut</span>
+                        <span class="text-base font-medium ">{{player.first_national_team_debut}}</span>
+                    </div>
+                    
+                    <!-- caps -->
+                    <div class="flex flex-col flex-[1_0_0] items-start gap-2">
+                        <span class="text-xs font-normal opacity-[0.7]">Caps</span>
+                        <span class="text-base font-medium ">{{player.caps}} Appearances</span>                 
+                    </div>
+            
+                    <!-- intl goals-->
+                    <div class="flex flex-col flex-[1_0_0] items-start gap-2">
+                        <span class="text-xs font-normal opacity-[0.7]">International Goals</span>
+                        <span class="text-base font-medium ">{{player.international_goals}} Goals</span>
+                    </div>                  
+                </div>
+            </div> 
+
+            <div class="divider"></div>
+
+            <div class="inline-flex flex-col items-start gap-4">                                  
+                
+            <div class="w-full flex items-center justify-between">                                
+                <div class="flex flex-col flex-[1_0_0] items-start gap-2">
+                    <span class="text-xs font-normal opacity-[0.7]">2nd Nationality</span>
+                    
+                    {% if player.second_nationality %}
+                        <div class="flex items-center gap-1.5">
+                            <img src="{{ player.second_nationality.0 }}" class="h-6 w-6" alt="">
+                            <span class="text-base font-medium ">{{ player.second_nationality.1 }}</span>
+                        </div>
+                    {% else %}
+                        <span class="text-base font-medium">-</span>
+                    {% endif %}
+                </div>      
+
+            </div>
+            </div>        
+        </div> 
+    </div>
+  
+    <!-- Current Season stats -->
+    <div class="hidden lg:card w-full xl:w-[100%] shadow-sm bg-[#313131] rounded-none mt-4">
+        <div class="card-body p-4 w-full"> 
+            <div class="flex flex-col items-start gap-4 py-0.5">
+                <!-- Current Season Stats Header Row -->
+                <div class="flex justify-between items-center w-full">
+                    <div class="flex gap-2 items-center">
+
+                        <span class="text-[18px] font-medium whitespace-nowrap">Current Season Stats</span>
+                    </div>
+                    <!-- Header Row Itemns -->
+                    {% include "players/partials/header_row.html" %}
+                </div>
+
+                <!-- Current Season Stats Rows -->
+                {% include "players/partials/current_season_stats.html" %}
+
+
+            </div>  
+        </div>
+    </div>
+
+    <!-- Club History -->
+    <div class="hidden lg:card w-full xl:w-[100%]  shadow-sm bg-[#313131] rounded-none mt-4">
+        <div class="card-body w-full"> 
+            <div class="flex flex-col items-start gap-4 py-0.5">
+                <!-- Club history header row -->
+                <div class="flex justify-between items-center w-full">
+                    <div class="flex gap-2 items-start">
+                        <span class="text-[18px] font-medium">Club History</span>
+                    </div>
+                    <!-- Header items -->
+                    {% include "players/partials/header_row.html" %}
+                </div>
+                <!-- Club History -->
+                {% include "players/partials/club_history.html" %}
+                
+            </div>                   
+        </div>
+    </div>
+
+    <!-- National Team History -->
+    <div class="hidden lg:card w-full xl:w-[100%] shadow-sm bg-[#313131] rounded-none mt-4">
+      <div class="card-body md:w-full"> 
+          <!-- National Team stats -->
+          <div class="flex flex-col items-start gap-4 py-0.5">
+            <!-- National Team Header Row -->
+            {% include "players/partials/national_team_header.html" %}
+
+            {% include "players/partials/national_team_rows.html" %}
+          </div>                  
+      </div>
+    </div>
+  
+    <!-- 
+      Player Info - Mobile View (visible on screens smaller than 'lg')
+      ---------------------------------------------------------------
+      This section is a collapsible container for displaying player info on small screens.
+      It is:
+      - Hidden on 'lg' (1024px and up) and visible below that
+    -->
+    <div tabindex="0" class="lg:hidden collapse  collapse-arrow bg-[#313131] border-base-300 border mt-4">
+      <input type="checkbox" />
+      <div class="collapse-title font-semibold">
+        <div class="flex items-center gap-2">
+          <span class="text-xl font-medium">Player Info</span>
+        </div>        
+      </div>
+      <!-- player info -->
+      <div class="collapse-content text-sm flex flex-col  gap-6">
+        <div class="flex flex-col items-start gap-4 self-stretch">
+          <!-- height, age and dob -->
+          <div class="h-[46px] flex justify-between self-stretch">
+            <div class="inline-flex flex-col items-start">
+              <span class="text-xs font-normal text-white/70">Birth</span>
+              <span class="text-base font-medium">{{player.date_of_birth}}</span>
+            </div>
+            <!-- age -->
+            <div class="inline-flex flex-col items-start">
+              <span class="text-xs font-normal text-white/70">Age</span>
+              <span class="text-base font-medium">{{player.age}}</span>
+            </div>
+            <!-- height -->
+            <div class="inline-flex flex-col items-start">
+              <span class="text-xs font-normal text-white/70">Height</span>
+              <span class="text-base font-medium">{{ player.height }}</span>
+            </div>
+          </div>
+          <!-- place of birth -->
+          <div class="flex flex-col items-start gap-0.5 self-stretch">
+            <span class="text-xs font-normal text-white/70">Place of Birth</span>
+            <div class="flex items-center gap-2">
+              <img src="{{player.place_of_birth_flag}}" class="w-6 h-6" alt="">
+              <span class="font-medium text-base">{{player.place_of_birth}}</span>
+            </div>
+          </div>
+
+          <!-- positions -->
+          <div class="flex flex-col items-start gap-0.5 self-stretch">
+            <span class="text-xs font-normal text-white/70">Postitions</span>
+            <div class="flex items-center gap-2">
+              <span class="font-normal text-base">{{player.other_positions|join:","}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 
+      Current Season Stats - Mobile View (visible on screens smaller than 'lg')
+      ---------------------------------------------------------------
+      This section is a collapsible container for displaying player info on small screens.
+      It is:
+      - Hidden on 'lg' (1024px and up) and visible below that
+    -->
+    <div tabindex="0" class="lg:hidden collapse  collapse-arrow bg-[#313131] border-base-300 border mt-4">
+      <input type="checkbox" />
+      <div class="collapse-title font-semibold">
+        <div class="flex items-center gap-2">
+          <img src="{{ player.club_logo_head }}" class="h-12 w-12" alt="">
+          <span class="text-xl font-medium">Current Season Stats</span>
+        </div>        
+      </div>
+      <!-- Current Season stats collapsible -->
+      <div class="collapse-content text-sm flex flex-col  gap-6">
+          <!-- current season stats by competitions -->
+          {% include "players/partials/md_current_season.html" %}
+      </div>
+    </div>
+
+    <!-- club history main collapsible Mobile View (visible on screens smaller than 'lg') -->
+    <div tabindex="0" class="lg:hidden collapse  collapse-arrow bg-[#313131] border-base-300 border mt-4">
+      <input type="checkbox" />
+      <div class="collapse-title font-semibold">
+        <div class="flex items-center gap-2">
+          <span class="text-xl font-medium">Club History</span>
+        </div>        
+      </div>
+      <!-- club history collapsible -->
+      <div class="collapse-content text-sm flex flex-col  gap-6">
+        {% include "players/partials/md_club_history.html" %}
+      </div>
+    </div>
+    <!-- 
+      National Team  Stats - Medium Screens Only (Visible between 768px and 1023px)
+      ---------------------------------------------------------------------
+      - Hidden on small (≤768px) and large (≥1024px) screens
+      - Appears only in the medium range (tablet view)
+      - Styled as a collapsible section with dark background and border
+      - Collapse arrow indicates expandable content
+    -->
+    <div tabindex="0" class="lg:hidden max-md:hidden collapse  collapse-arrow bg-[#313131] border-base-300 border mt-4">
+      <input type="checkbox" />
+      <div class="collapse-title font-semibold">
+        <div class="flex items-center gap-2">
+          <span class="text-xl font-medium">National Team History</span>
+        </div>        
+      </div>
+      <!-- National Team stats collapsible -->
+      <div class="collapse-content text-sm flex flex-col  gap-6">
+        <!-- National Team -->
+        {% include "players/partials/md_national_team.html" %}
+      </div>
+    </div>
+
+    <!-- National Team Stats Small screens only (≤768px) -->
+    <div tabindex="0" class="lg:hidden hidden max-md:collapse  collapse-arrow bg-[#313131] border-base-300 border mt-4">
+      <input type="checkbox" />
+      <div class="collapse-title font-semibold">
+        <div class="flex items-center gap-2">
+          <span class="text-xl font-medium">National Team History</span>
+        </div>        
+      </div>
+      <!-- National Team stats collapsible -->
+      <div class="collapse-content text-sm flex flex-col  gap-6">
+        <div class="flex flex-col items-start gap-3">
+            <!-- national team stats md -->
+            {% include "players/partials/md_national_team_history.html" %}
+        </div>
+      
+      </div>
+    </div>
+  
+{% endblock content %}
